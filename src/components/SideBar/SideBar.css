@@ -2,8 +2,7 @@
 /* TEXTO */
 
 .sidebar { /* REVISAR/REFAZER */
-    margin-top: 20px;
-    margin-left: 16px;
+    background-color: #121212;
     padding: 20px 50px;
 }
 
@@ -12,6 +11,27 @@
     margin-top: 20px;
 }
 
+
+.sections_button {
+    display: flex;
+    align-items: center;
+    gap: 8px; /* Espaço entre o ícone e o texto */
+
+    margin-top: 12px;
+}
+
+.section-icon {
+    width: 36px; /* Ajuste conforme necessário */
+    height: auto;
+    padding: 8px;
+    flex-shrink: 0; /* Garante que o ícone não diminua */
+
+    background-color: hsl(0, 0%, 25%);
+    border-radius: 8px;
+}
+
 .section-text {
-    font-size: 14px;
+    font-size: 18px;
+    font-weight: 500;
+    white-space: nowrap; /* Impede que o texto quebre para a linha de baixo */
 }
