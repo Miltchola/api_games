@@ -1,4 +1,6 @@
 import "./Header.css";
+import searchIcon from '../../assets/icons/search.png';
+
 
 const Header = () => {
     return (
@@ -12,7 +14,7 @@ const Header = () => {
             <div className="middle-side">
                 <div className="search-container">
                     {/* Ícone da Lupa de Pesquisa */}
-                    <img className="search-icon" src="/path-to-search-icon.png" alt="Search" />
+                    <img className="search-icon" src={searchIcon} alt="Search" />
                     <input className="search" type="text" placeholder="Search for Games" />
                 </div>
             </div>

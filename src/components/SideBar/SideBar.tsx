@@ -3,17 +3,32 @@ import "./SideBar.css";
 
 const SideBar = () => {
     return <div className="sidebar">
-        <div className="above-header">
-            <h3 className="header-text">Home</h3>
-            <h3 className="header-text">Reviews</h3>
-            <h3 className="header-text">New Releases</h3>
+        <div className="top">
+            <h3 className="top-text">Home</h3>
+            <h3 className="top-text">Reviews</h3>
+            <h3 className="top-text">New Releases</h3>
         </div>
 
 
         <div className="sections">
             <div className="sections_button">
                 <img src="" alt="" />
-                <h6>Last 30 days</h6>
+                <h6 className="section-text">Last 30 days</h6>
+            </div>
+
+            <div className="sections_button">
+                <img src="" alt="" />
+                <h6 className="section-text">This week</h6>
+            </div>
+
+            <div className="sections_button">
+                <img src="" alt="" />
+                <h6 className="section-text">Next week</h6>
+            </div>
+
+            <div className="sections_button">
+                <img src="" alt="" />
+                <h6 className="section-text">Release calendar</h6>
             </div>
         </div>
     </div>

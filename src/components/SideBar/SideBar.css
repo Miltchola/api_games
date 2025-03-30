@@ -6,3 +6,12 @@
     margin-left: 16px;
     padding: 20px 50px;
 }
+
+.top-text {
+    font-size: 24px;    
+    margin-top: 20px;
+}
+
+.section-text {
+    font-size: 14px;
+}
