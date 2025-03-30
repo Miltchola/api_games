@@ -59,3 +59,36 @@ html, body {
     flex-direction: column;
   }
 }
+
+
+/* SEÇÃO PARA ESTILIZAR OS CARDS */
+.section-title {
+  color: white;
+  font-size: 4rem;
+  margin: 10px 0 10px 0;
+}
+
+.section-subtitle {
+  color: #aaa;
+  font-size: 1rem;
+  margin-bottom: 20px;
+}
+
+.games-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  gap: 20px;
+  margin-top: 40px;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  .games-grid {
+    justify-content: center;
+  }
+  
+  .section-title {
+    font-size: 1.5rem;
+  }
+}
