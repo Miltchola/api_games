@@ -48,30 +48,19 @@ html, body {
   background-color: #121212;
 }
 
-/* Responsividade */
-@media (max-width: 768px) {
-  .header {
-    padding: 0.8rem 1rem;
-    flex-wrap: wrap;
-  }
-  
-  .main-content {
-    flex-direction: column;
-  }
-}
-
 
 /* SEÇÃO PARA ESTILIZAR OS CARDS */
 .section-title {
   color: white;
-  font-size: 4rem;
-  margin: 10px 0 10px 0;
+  font-size: 3.5rem;
+  margin: 10px 0;
+  line-height: 1.2;
 }
 
 .section-subtitle {
   color: #aaa;
-  font-size: 1rem;
-  margin-bottom: 20px;
+  font-size: 1.3rem;
+  margin-bottom: 15px;
 }
 
 .games-grid {
@@ -82,13 +71,68 @@ html, body {
   margin-top: 40px;
 }
 
+
+/* Ajustes para OS CARDS MOBILE */
+@media (max-width: 768px) {
+  .games-grid {
+      display: block; /* Muda para layout de bloco (1 card por linha) */
+  }
+
+  .game-card {
+      width: 100%;
+      margin-bottom: 20px;
+  }
+}
+
+
+
+
 /* Responsividade */
 @media (max-width: 768px) {
+  .header {
+    padding: 0.8rem 1rem;
+    flex-wrap: wrap;
+  }
+  
+  .main-content {
+    flex-direction: column;
+  }
+
   .games-grid {
     justify-content: center;
   }
   
   .section-title {
     font-size: 1.5rem;
+    margin: 8px 0;
+  }
+
+  .section-subtitle {
+      font-size: 0.85rem;
+      margin-bottom: 12px;
+  }
+
+  .page-content {
+      padding: 1rem;
+  }
+  .main-content {
+    position: relative;
+  }
+
+
+  /* Quando a sidebar está visível, desliza o conteúdo */
+  .sidebar.visible + .page-content {
+      transform: translateX(280px);
+  }
+}
+
+@media (max-width: 480px) {
+  .section-title {
+      font-size: 1.3rem;
+  }
+  
+  .games-grid {
+      gap: 10px;
+      margin-top: 20px;
   }
 }

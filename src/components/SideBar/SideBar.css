@@ -1,9 +1,13 @@
 
 /* TEXTO */
 
-.sidebar { /* REVISAR/REFAZER */
+.sidebar {
     background-color: #121212;
     padding: 20px 50px;
+    width: 280px;
+    transition: transform 0.3s ease;
+    position: relative;
+    z-index: 900;
 }
 
 .top-text {
@@ -34,4 +38,35 @@
     font-size: 18px;
     font-weight: 500;
     white-space: nowrap; /* Impede que o texto quebre para a linha de baixo */
+}
+
+
+/* RESPONSIVIDADE */
+/* Estilo para mobile */
+@media (max-width: 768px) {
+    .sidebar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        transform: translateX(-100%);
+        padding: 20px;
+        overflow-y: auto;
+    }
+    
+    .sidebar.visible {
+        transform: translateX(0);
+    }
+    
+    /* Adiciona overlay quando sidebar está visível */
+    .sidebar.visible::after {
+        content: '';
+        position: fixed;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        width: 100vw;
+        background-color: rgba(0, 0, 0, 0.5);
+        z-index: -1;
+    }
 }

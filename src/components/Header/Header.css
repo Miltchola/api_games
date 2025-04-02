@@ -74,33 +74,74 @@
     white-space: nowrap;
 }
 
-/* Mobile */
+/* Adicione estas regras ao Header.css */
+
+.menu-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 5px;
+    display: none; /* Escondido por padrão (só aparece em mobile) */
+}
+
+.menu-icon {
+    width: 24px;
+    height: 24px;
+    filter: invert(1); /* Para ícone branco */
+}
+
+
+/* Mobile *//* Ajustes para a barra de pesquisa em mobile */
 @media (max-width: 768px) {
+
+    .menu-button {
+        display: block; /* Mudar de none para block */
+        margin-right: 10px;
+        background: transparent;
+        border: none;
+    }
+    
     .header {
-        flex-wrap: wrap;
         padding: 0.8rem;
-        gap: 10px;
-    } 
-
-    .middle-side {
-        order: 3;
-        width: 100%;
-        margin: 10px 0 0 0;
-        min-width: 100%;
+        gap: 8px;
     }
-
-    .right-side .header-text {
-        display: none;
+    
+    .middle-side .search {
+        height: 36px;
+        padding: 0 15px 0 35px;
+        font-size: 0.9rem;
     }
-
+    
     .search-icon {
-        left: 10px;
         width: 16px;
         height: 16px;
+        left: 10px;
     }
+    
+    .site-title {
+        font-size: 1.1rem;
+        margin-left: 5px;
+    }
+    
+    .logo {
+        height: 32px;
+    }
+    
+    .menu-icon {
+        width: 20px;
+        height: 20px;
+    }
+}
 
+@media (max-width: 480px) {
     .middle-side .search {
-        padding: 0 15px 0 35px;
+        height: 32px;
+        padding: 0 12px 0 32px;
+        font-size: 0.8rem;
     }
-
+    
+    .search-icon {
+        width: 14px;
+        height: 14px;
+    }
 }

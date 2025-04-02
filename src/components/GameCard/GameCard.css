@@ -1,3 +1,5 @@
+
+
 .game-card {
     width: 280px;
     background-color: #1e1e1e;
@@ -76,5 +78,19 @@
       width: 100%;
       max-width: 350px;
       margin: 10px 0;
+    }
+    .card-image-container {
+        height: 180px; /* Altura maior para melhor visualização */
+    }
+}
+
+/* Ajustes finos para telas muito pequenas */
+@media (max-width: 480px) {
+    .game-card {
+        margin: 8px 0;
+    }
+
+    .card-image-container {
+        height: 160px;
     }
 }
