@@ -21,12 +21,16 @@ const GameCard: React.FC<GameCardProps> = ({
     const [imageLoaded, setImageLoaded] = useState(false);
     const [imageError, setImageError] = useState(false);
 
-    const handleImageLoad = (e: React.SyntheticEvent<HTMLImageElement>) => {
+    const handleImageLoad = () => {
         setImageLoaded(true);
         setImageError(false);
     };
-
-    const handleImageError = (e: React.SyntheticEvent<HTMLImageElement>) => {
+    React.useEffect(() => {
+        if (imageError) {
+            console.warn(`Image failed to load: ${imageUrl}`);
+        }
+    }, [imageError, imageUrl]);
+    const handleImageError = () => {
         setImageLoaded(false);
         setImageError(true);
     };
