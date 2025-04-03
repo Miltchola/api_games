@@ -22,7 +22,7 @@ const GameList: React.FC = () => {
       try {
         setLoading(true);
         const response = await fetch(
-          `https://api.rawg.io/api/games?key=${API_KEY}&dates=2015-01-01,2024-12-31&ordering=-added&page_size=5`
+          `https://api.rawg.io/api/games?key=${API_KEY}&dates=2015-01-01,2024-12-31&ordering=-added&page_size=20`
         );
         
         if (!response.ok) throw new Error('Failed to fetch games');
