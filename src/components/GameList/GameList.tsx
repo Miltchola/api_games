@@ -22,7 +22,7 @@ const GameList: React.FC = () => {
       try {
         setLoading(true);
         const response = await fetch(
-          `https://api.rawg.io/api/games?key=${API_KEY}&dates=2015-01-01,2024-12-31&ordering=-added&page_size=20`
+          `https://api.rawg.io/api/games?key=${API_KEY}&dates=2015-01-01,2024-12-31&ordering=-added&page_size=21`
         );
         
         if (!response.ok) throw new Error('Failed to fetch games');
@@ -42,9 +42,23 @@ const GameList: React.FC = () => {
   if (loading) return <div className="loading">Loading games...</div>;
   if (error) return <div className="error">Error: {error}</div>;
 
+
+  {/* ESSA CONST SERÁ UTILIZADA PRA FAZER BUSCAS ORDENADAS */}
+
+  {/* PRECISA IMPLEMENTAR NA MAIN!!! */}
+
+
+  const sortFunctions = {
+    ratingPositive: (a:any,b:any) =>{ return b.rating - a.rating},
+    ratingNegative: (a:any,b:any) =>{ return a.rating - b.rating},
+    name: (a:any,b:any) =>{ return b.name - a.name},
+    isTrending: (a:any,b:any) =>{ return b.rating - a.rating},
+  }
+  {/* Os sorts de name  e isTrending não estão funcionando*/}
+
   return (
     <div className="games-grid">
-      {games.map((game) => (
+      {games.sort(sortFunctions['ratingPositive']).map((game) => (
         <GameCard
           key={game.id}
           title={game.name}

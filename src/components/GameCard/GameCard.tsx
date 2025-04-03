@@ -85,7 +85,9 @@ const GameCard: React.FC<GameCardProps> = ({
                         <span className="rating-value">{rating.toFixed(1)}/5</span>
                     </div>
                 )}
+                
             </div>
+            <button className="card-button">See more</button>
         </div>
     );
 };

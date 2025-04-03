@@ -19,6 +19,10 @@ function App() {
         <div className="page-content">
           <h2 className="section-title">New and trending</h2>
           <p className="section-subtitle">Based on player counts and release date</p>
+
+          {/* tentei fazer um MENU DROPDOWN mas deu errado :( */}
+          {/* Se conseguirem seria foda */}
+          <select className="order-button" ></select>
           
           {/* Substitui a lista estática pelo GameList que consome a API */}
           <GameList />
