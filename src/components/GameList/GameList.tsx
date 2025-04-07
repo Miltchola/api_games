@@ -11,10 +11,11 @@ interface Game {
 }
 
 interface GameListProps {
-  sortBy: 'ratingPositive' | 'ratingNegative' | 'name' | 'isTrending' |'id';
+  sortBy: 'ratingPositive' | 'ratingNegative' | 'name' | 'isTrending' | 'id';
+  searchQuery: string; // New prop for search functionality
 }
 
-const GameList: React.FC<GameListProps> = ({ sortBy }) => {
+const GameList: React.FC<GameListProps> = ({ sortBy, searchQuery }) => {
   const [games, setGames] = useState<Game[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
@@ -51,12 +52,17 @@ const GameList: React.FC<GameListProps> = ({ sortBy }) => {
     id: (a: Game, b: Game) => a.id - b.id, // New sorting function for Home
   };
 
+  // Filter games based on the search query
+  const filteredGames = games.filter((game) =>
+    game.name.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
   if (loading) return <div className="loading">Loading games...</div>;
   if (error) return <div className="error">Error: {error}</div>;
 
   return (
     <div className="games-grid">
-      {games.sort(sortFunctions[sortBy]).map((game) => (
+      {filteredGames.sort(sortFunctions[sortBy]).map((game) => (
         <GameCard
           key={game.id}
           title={game.name}
