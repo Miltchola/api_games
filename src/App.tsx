@@ -6,6 +6,7 @@ import GameList from './components/GameList/GameList';
 
 function App() {
   const [sidebarVisible, setSidebarVisible] = useState(false);
+  const [sortBy, setSortBy] = useState<'ratingPositive' | 'ratingNegative' | 'name' | 'isTrending' | 'id'>('id');
 
   const toggleSidebar = () => {
     setSidebarVisible(!sidebarVisible);
@@ -15,17 +16,11 @@ function App() {
     <div className="app-container">
       <Header toggleSidebar={toggleSidebar} />
       <div className="main-content">
-        <SideBar isVisible={sidebarVisible} />
+        <SideBar isVisible={sidebarVisible} setSortBy={setSortBy} />
         <div className="page-content">
           <h2 className="section-title">New and trending</h2>
           <p className="section-subtitle">Based on player counts and release date</p>
-
-          {/* tentei fazer um MENU DROPDOWN mas deu errado :( */}
-          {/* Se conseguirem seria foda */}
-          <select className="order-button" ></select>
-          
-          {/* Substitui a lista estática pelo GameList que consome a API */}
-          <GameList />
+          <GameList sortBy={sortBy} />
         </div>
       </div>
     </div>

@@ -10,7 +10,11 @@ interface Game {
   ratings_count: number;
 }
 
-const GameList: React.FC = () => {
+interface GameListProps {
+  sortBy: 'ratingPositive' | 'ratingNegative' | 'name' | 'isTrending' |'id';
+}
+
+const GameList: React.FC<GameListProps> = ({ sortBy }) => {
   const [games, setGames] = useState<Game[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
@@ -24,9 +28,9 @@ const GameList: React.FC = () => {
         const response = await fetch(
           `https://api.rawg.io/api/games?key=${API_KEY}&dates=2015-01-01,2024-12-31&ordering=-added&page_size=21`
         );
-        
+
         if (!response.ok) throw new Error('Failed to fetch games');
-        
+
         const data = await response.json();
         setGames(data.results);
       } catch (err) {
@@ -39,26 +43,20 @@ const GameList: React.FC = () => {
     fetchGames();
   }, []);
 
+  const sortFunctions = {
+    ratingPositive: (a: Game, b: Game) => b.rating - a.rating,
+    ratingNegative: (a: Game, b: Game) => a.rating - b.rating,
+    name: (a: Game, b: Game) => a.name.localeCompare(b.name),
+    isTrending: (a: Game, b: Game) => b.rating - a.rating, // Assuming trending is based on rating
+    id: (a: Game, b: Game) => a.id - b.id, // New sorting function for Home
+  };
+
   if (loading) return <div className="loading">Loading games...</div>;
   if (error) return <div className="error">Error: {error}</div>;
 
-
-  {/* ESSA CONST SERÁ UTILIZADA PRA FAZER BUSCAS ORDENADAS */}
-
-  {/* PRECISA IMPLEMENTAR NA MAIN!!! */}
-
-
-  const sortFunctions = {
-    ratingPositive: (a:any,b:any) =>{ return b.rating - a.rating},
-    ratingNegative: (a:any,b:any) =>{ return a.rating - b.rating},
-    name: (a:any,b:any) =>{ return b.name - a.name},
-    isTrending: (a:any,b:any) =>{ return b.rating - a.rating},
-  }
-  {/* Os sorts de name  e isTrending não estão funcionando*/}
-
   return (
     <div className="games-grid">
-      {games.sort(sortFunctions['ratingPositive']).map((game) => (
+      {games.sort(sortFunctions[sortBy]).map((game) => (
         <GameCard
           key={game.id}
           title={game.name}
