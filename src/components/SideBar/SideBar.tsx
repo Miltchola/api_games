@@ -13,7 +13,7 @@ const SideBar: React.FC<SideBarProps> = ({ isVisible, setSortBy }) => {
   return (
     <div className={`sidebar ${isVisible ? 'visible' : ''}`}>
       <div className="top">
-        <h3 className="top-text">Sort By</h3>
+        <h3 className="top-text">Side Bar</h3>
       </div>
 
       <div className="sections">

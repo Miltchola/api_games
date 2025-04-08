@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './GameCard.css'; // Arquivo CSS que forneci anteriormente
 
 interface GameCardProps {
@@ -8,6 +9,7 @@ interface GameCardProps {
     isTrending?: boolean;
     releaseInfo?: string;
     rating?: number;
+    id: string; // Add id prop
 }
 
 const GameCard: React.FC<GameCardProps> = ({ 
@@ -16,10 +18,12 @@ const GameCard: React.FC<GameCardProps> = ({
     imageUrl, 
     isTrending = false,
     releaseInfo,
-    rating
+    rating,
+    id
 }) => {
     const [imageLoaded, setImageLoaded] = useState(false);
     const [imageError, setImageError] = useState(false);
+    const navigate = useNavigate();
 
     const handleImageLoad = () => {
         setImageLoaded(true);
@@ -33,6 +37,10 @@ const GameCard: React.FC<GameCardProps> = ({
     const handleImageError = () => {
         setImageLoaded(false);
         setImageError(true);
+    };
+
+    const handleSeeMore = () => {
+        navigate(`/game/${id}`);
     };
 
     return (
@@ -87,7 +95,7 @@ const GameCard: React.FC<GameCardProps> = ({
                 )}
                 
             </div>
-            <button className="card-button">See more</button>
+            <button className="card-button" onClick={handleSeeMore}>See more</button>
         </div>
     );
 };

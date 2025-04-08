@@ -65,6 +65,7 @@ const GameList: React.FC<GameListProps> = ({ sortBy, searchQuery }) => {
       {filteredGames.sort(sortFunctions[sortBy]).map((game) => (
         <GameCard
           key={game.id}
+          id={game.id.toString()} // Convert id to string
           title={game.name}
           subtitle={`${game.ratings_count} ratings`}
           imageUrl={game.background_image || '/placeholder-game.jpg'}

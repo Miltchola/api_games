@@ -1,0 +1,151 @@
+
+.rating-container {
+    display: flex;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.game-release {
+    margin-left: 32px;
+}
+
+.game-image {
+    width: 700px;
+    height: auto;
+    border-radius: 20px;
+    margin-top: 28px;
+    margin-bottom: 38px;
+
+    cursor: pointer;
+    transition: all 0.5s ease-in-out;
+}
+
+.game-image:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+}
+
+/* BOTÕES */
+.game-buttons {
+    display: flex;
+    gap: 28px;
+    margin-top: 20px;
+}
+
+
+/* BOTÃO DE ADICIONAR NA LISTA DE MY GAMES*/
+.buttons-my-game {
+    background-color: #222222;
+
+    display: flex;
+    align-items: center;
+    align-content: center;
+    gap: 10px;
+    width: 200px;
+    height: 70px;
+
+    cursor: pointer;
+    transition: all 0.5s ease-in-out;
+}
+
+.buttons-my-game:hover {
+    background-color: #f0f0f0;
+    border: 0px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    color: black;
+    transform: scale(1.05);
+}
+
+/* lado esquerdo do botão (ícone) */
+.buttons-my-game-left{
+    display: flex;
+    flex-direction: column;
+}
+
+.button-img{
+    width: 40px;
+    height: auto;
+}
+
+.buttons-my-game-right{
+    display: flex;
+    flex-direction: column;
+    margin-left: 12px;
+    align-items: flex-start;
+}
+
+.button-subtext {
+    font-size: 10px;
+    color: #a5a5a5;
+}
+
+.button-text {
+    font-size: 18px;
+}
+
+/* BOTÃO DE ADICIONAR NA WISHLIST*/
+.buttons-wishlist {
+    background-color: #222222;
+
+    display: flex;
+    align-items: center;
+    align-content: center;
+    gap: 10px;
+    width: 200px;
+    height: 70px;
+
+    cursor: pointer;
+    transition: all 0.5s ease-in-out;
+}
+
+.buttons-wishlist:hover {
+    background-color: #f0f0f0;
+    border: 0px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    color: black;
+    transform: scale(1.05);
+}
+
+.buttons-wishlist-left{
+    display: flex;
+    flex-direction: column;
+}
+
+.button-img{
+    width: 40px;
+    height: auto;
+}
+
+.buttons-wishlist-right{
+    display: flex;
+    flex-direction: column;
+    margin-left: 12px;
+    align-items: flex-start;
+}
+
+/* TEXTO E INFORMAÇÕES DO JOGO*/
+
+.game-info {
+    margin-top: 50px;
+}
+
+.info-title {
+    font-size: 30px;
+    font-weight: bold;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.game-description{
+    font-size: 18px;
+    line-height: 1.5;
+    margin-bottom: 20px;
+    max-width: 70%; /* só em telas grande, PRECISA MUDAR PARA TELAS MENORES*/
+}
+
+.game-release{
+    font-size: 20px;
+    line-height: 1.5;
+    margin-bottom: 20px;
+    max-width: 70%; /* só em telas grande, PRECISA MUDAR PARA TELAS MENORES*/
+}

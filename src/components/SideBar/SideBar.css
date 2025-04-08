@@ -20,13 +20,23 @@
     display: flex;
     align-items: center;
     gap: 8px; /* Espaço entre o ícone e o texto */
-
+    width: 100%;
     margin-top: 12px;
+    cursor: pointer;
+    transition: all ease 0.5s;
+}
+
+.sections_button:hover {
+    background-color: hsl(0, 0%, 100%);
+    color: hsl(0, 0%, 0%);
+    transform: scale(1.05);
+    border: 0px solid hsl(0, 0%, 100%);
 }
 
 .section-icon {
     width: 36px; /* Ajuste conforme necessário */
     height: auto;
+    margin-left: -8px;
     padding: 8px;
     flex-shrink: 0; /* Garante que o ícone não diminua */
 
