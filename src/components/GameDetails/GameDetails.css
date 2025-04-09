@@ -1,5 +1,10 @@
 .game-details {
-    height: 210vh;
+    min-height: 100vh; /* Ensure it takes at least the full viewport height */
+    height: auto; /* Allow the height to grow based on content */
+    overflow-y: hidden; /* Enable scrolling for the entire page */
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
 }
 
 .rating-container {
