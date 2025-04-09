@@ -92,8 +92,8 @@ const GameDetails: React.FC = () => {
             <h3 className="info-title">About the Game</h3>
                 <p className="game-description">{game?.description}</p>
 
-            <h3 className="info-title">Release Date: {game?.released}</h3>
-            {/* <p className="game-release">Released: {game?.released}</p> */}
+                <h3 className="info-title">Release Date:</h3>
+                <p className="game-release">Released: {game?.released}</p>
         </div>
       
     </div>
