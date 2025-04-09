@@ -1,8 +1,4 @@
 
-.game-details {
-    height: 210vh;
-}
-
 .rating-container {
     display: flex;
     align-items: center;
@@ -14,7 +10,7 @@
 }
 
 .game-image {
-    width: 600px;
+    width: 700px;
     height: auto;
     border-radius: 20px;
     margin-top: 28px;
@@ -144,7 +140,7 @@
     font-size: 18px;
     line-height: 1.5;
     margin-bottom: 20px;
-    max-width: 600px; /* só em telas grande, PRECISA MUDAR PARA TELAS MENORES*/
+    max-width: 70%; /* só em telas grande, PRECISA MUDAR PARA TELAS MENORES*/
 }
 
 .game-release{
