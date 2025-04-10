@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import './GameDetails.css';
-import plus from '../../assets/icons/plus.png';
-import love from '../../assets/icons/love.png';
+import plus from '../../assets/Icons/plus.png';
+import love from '../../assets/Icons/love.png';
 import GameReviews from '../GameReviews/GameReviews';
 
 interface GameDetailsProps {

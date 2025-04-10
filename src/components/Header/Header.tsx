@@ -1,7 +1,7 @@
 import "./Header.css";
-import searchIcon from '../../assets/icons/search.png';
-import logo from '../../assets/icons/games.png'
-import menuButton from '../../assets/icons/menu.png'
+import searchIcon from '../../assets/Icons/search.png';
+import logo from '../../assets/Icons/games.png'
+import menuButton from '../../assets/Icons/menu.png'
 
 const Header = ({ toggleSidebar, setSearchQuery }: { toggleSidebar: () => void; setSearchQuery: (query: string) => void }) => {
     return (

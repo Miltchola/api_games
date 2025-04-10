@@ -1,13 +1,13 @@
 import "./SideBar.css";
 
 import letra from '../../assets/Icons/letra a.png'
-import fire from '../../assets/icons/fire.png';
-import trophy from '../../assets/icons/trophy.png';
+import fire from '../../assets/Icons/fire.png';
+import trophy from '../../assets/Icons/trophy.png';
 import poop from '../../assets/Icons/poop.png'
 
 import user from '../../assets/Icons/user.png'
 import home from '../../assets/Icons/home.png'
-import book from '../../assets/icons/book.png';
+import book from '../../assets/Icons/book.png';
 import wishlist from '../../assets/Icons/wishlist.png'
 
 interface SideBarProps {
