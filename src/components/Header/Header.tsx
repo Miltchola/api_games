@@ -1,6 +1,6 @@
 import "./Header.css";
 import searchIcon from '../../assets/icons/search.png';
-import logo from '../../assets/Icons/games.png'
+import logo from '../../assets/icons/games.png'
 import menuButton from '../../assets/icons/menu.png'
 
 const Header = ({ toggleSidebar, setSearchQuery }: { toggleSidebar: () => void; setSearchQuery: (query: string) => void }) => {
@@ -10,8 +10,8 @@ const Header = ({ toggleSidebar, setSearchQuery }: { toggleSidebar: () => void; 
           <button className="menu-button" onClick={toggleSidebar}>
             <img className="logo" src={menuButton} alt="Site Logo" />
           </button>
-          <img className="logo" src="/assets/games-DX9OXY3m.png" alt="Site Logo" />
-          <h1 className="site-title">Hot and Trending</h1>
+          <img className="logo" src={logo} alt="Site Logo" />
+          <h1 className="site-title">Gamer Moment</h1>
         </div>
   
         {/* Search Bar */}
