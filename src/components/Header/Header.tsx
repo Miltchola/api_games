@@ -8,7 +8,7 @@ const Header = ({ toggleSidebar, setSearchQuery }: { toggleSidebar: () => void; 
       <div className="header">
         <div className="left-side">
           <button className="menu-button" onClick={toggleSidebar}>
-            <img className="logo" src={logo} alt="Site Logo" />
+            <img className="logo" src={menuButton} alt="Site Logo" />
           </button>
           <img className="logo" src="/assets/games-DX9OXY3m.png" alt="Site Logo" />
           <h1 className="site-title">Hot and Trending</h1>
