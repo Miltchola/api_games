@@ -165,11 +165,11 @@
     font-size: 18px;
     line-height: 1.5;
     margin-bottom: 20px;
-    max-width: 70%;
+    max-width: 90%;
     white-space: pre-line;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
     .game-details {
         flex-direction: column;
         align-items: center;

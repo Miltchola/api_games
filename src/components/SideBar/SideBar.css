@@ -56,6 +56,7 @@
 @media (max-width: 768px) {
     .sidebar {
         position: fixed;
+        margin-top: 120px;
         top: 0;
         left: 0;
         bottom: 0;
@@ -70,6 +71,7 @@
     
     /* Adiciona overlay quando sidebar está visível */
     .sidebar.visible::after {
+        margin-top: 120px;
         content: '';
         position: fixed;
         top: 0;
