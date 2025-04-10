@@ -41,6 +41,32 @@ const GameDetails: React.FC = () => {
   }, [id]);
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   if (loading) return <div>Loading game details...</div>;
   if (error) return <div>Error: {error}</div>;
   if (!game) return <div>Game not found</div>;
