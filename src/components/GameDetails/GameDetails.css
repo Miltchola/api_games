@@ -1,211 +1,57 @@
-.game-details {
-    min-height: 100vh;
-    height: auto;
-    overflow-y: auto;
-    display: flex;
-    flex-direction: row;
-    box-sizing: border-box;
-    gap: 20px;
-    padding: 20px;
+.reviews-container {
+  padding: 20px;
 }
 
-.game-main {
-    flex: 2;
-    display: flex;
-    flex-direction: column;
+.reviews-title {
+  font-size: 24px;
+  margin-bottom: 20px;
+  color: white;
 }
 
-.game-reviews {
-    flex: 1;
-    max-width: 400px;
-    background-color: #222222;
-    border-left: 1px solid #444;
-    padding: 20px;
-    box-sizing: border-box;
-    overflow-y: auto;
+.review-card {
+  background-color: #333;
+  border-radius: 8px;
+  padding: 15px;
+  margin-bottom: 15px;
 }
 
-.rating-container {
-    display: flex;
-    align-items: center;
-    margin-top: 20px;
-    gap: 15px;
-    flex-wrap: wrap;
+.review-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
 }
 
-.rating-stars {
-    color: gold;
-    font-size: 1.2rem;
-    margin-right: 5px;
+.review-user {
+  font-weight: bold;
+  color: #f0f0f0;
 }
 
-.rating-value {
-    font-weight: bold;
-    margin-right: 15px;
+.review-rating {
+  color: gold;
 }
 
-.game-release {
-    margin-left: 0;
-    color: #aaa;
-    font-size: 1rem;
+.review-date {
+  color: #aaa;
+  font-size: 12px;
+  margin-bottom: 10px;
 }
 
-.game-image {
-    max-width: 100%;
-    width: auto;
-    height: auto;
-    border-radius: 20px;
-    margin-top: 28px;
-    margin-bottom: 38px;
-
-    cursor: pointer;
-    transition: all 0.5s ease-in-out;
+.review-text {
+  color: #ddd;
+  line-height: 1.5;
+  white-space: pre-line;
 }
-@@ -52,25 +66,20 @@
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
-}
-
-
-.game-buttons {
-    display: flex;
-    gap: 28px;
-    margin-top: 20px;
-}
-
-
-
-.buttons-my-game {
-    background-color: #222222;
-
-    display: flex;
-    align-items: center;
-    align-content: center;
-    gap: 10px;
-    width: 200px;
-    height: 70px;
-
-    cursor: pointer;
-    transition: all 0.5s ease-in-out;
-}
-@@ -83,18 +92,17 @@
-    transform: scale(1.05);
-}
-
-.buttons-my-game-left {
-
-    display: flex;
-    flex-direction: column;
-}
-
-.button-img {
-    width: 40px;
-    height: auto;
-}
-
-.buttons-my-game-right {
-    display: flex;
-    flex-direction: column;
-    margin-left: 12px;
-@@ -110,17 +118,14 @@
-    font-size: 18px;
-}
-
-
-.buttons-wishlist {
-    background-color: #222222;
-
-    display: flex;
-    align-items: center;
-    align-content: center;
-    gap: 10px;
-    width: 200px;
-    height: 70px;
-
-    cursor: pointer;
-    transition: all 0.5s ease-in-out;
-}
-@@ -133,25 +138,18 @@
-    transform: scale(1.05);
-}
-
-.buttons-wishlist-left {
-    display: flex;
-    flex-direction: column;
-}
-
-.buttons-wishlist-right {
-
-
-
-
-
-    display: flex;
-    flex-direction: column;
-    margin-left: 12px;
-    align-items: flex-start;
-}
-
-
-
-.game-info {
-    margin-top: 50px;
-}
-@@ -163,49 +161,51 @@
-    margin-bottom: 20px;
-}
-
-.game-description {
-    font-size: 18px;
-    line-height: 1.5;
-    margin-bottom: 20px;
-    max-width: 70%;
-    white-space: pre-line;
-
-
-
-
-
-
-}
-
 
 @media (max-width: 768px) {
-    .game-details {
-        flex-direction: column;
-        align-items: center;
-    }
-
-    .game-main {
-        width: 100%;
-    }
-
-    .game-reviews {
-        border-left: none;
-        border-top: 1px solid #444;
-        max-width: 100%;
-    }
-
-    .game-image {
-        width: 100%;
-        max-width: 100%;
-        height: auto;
-        margin-top: 20px;
-        margin-bottom: 20px;
-    }
-
-    .game-description {
-        max-width: 100%;
-        font-size: 16px;
-        line-height: 1.4;
-        text-align: justify;
-    }
-
-    .game-buttons {
-        flex-direction: column;
-        gap: 15px;
-    }
-
-    .rating-container {
-        gap: 10px;
-    }
+  .review-card {
+    padding: 10px;
+  }
+  
+  .review-header {
+    flex-direction: column;
+  }
+  
+  .review-rating {
+    margin-top: 5px;
+  }
 }
