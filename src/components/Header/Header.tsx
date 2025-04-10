@@ -2,8 +2,11 @@ import "./Header.css";
 import searchIcon from '../../assets/Icons/search.png';
 import logo from '../../assets/Icons/games.png'
 import menuButton from '../../assets/Icons/menu.png'
+import { useNavigate } from 'react-router-dom';
 
 const Header = ({ toggleSidebar, setSearchQuery }: { toggleSidebar: () => void; setSearchQuery: (query: string) => void }) => {
+    const navigate = useNavigate(); 
+    
     return (
       <div className="header">
         <div className="left-side">
@@ -28,11 +31,15 @@ const Header = ({ toggleSidebar, setSearchQuery }: { toggleSidebar: () => void; 
         </div>
   
         <div className="right-side">
-          <h5 className="header-text">LOG IN</h5>
-          <h5 className="header-text">SIGN UP</h5>
+          <button className="header-text" onClick={() => navigate('/login')}>
+            LOG IN
+          </button>
+          <button className="header-text" onClick={() => navigate('/signup')}>
+            SIGN UP
+          </button>
         </div>
       </div>
     );
-  };
+};
   
   export default Header;
