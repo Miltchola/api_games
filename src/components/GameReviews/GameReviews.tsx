@@ -1,12 +1,11 @@
-
 import React, { useEffect, useState } from 'react';
 import './GameReviews.css';
 
 interface Review {
   id: string;
   text: string;
-  user?: { username: string }; // Adjusted based on potential API structure
-  created_at?: string; // Adjusted based on potential API structure
+  user?: { username: string };
+  created_at?: string;
 }
 
 interface GameReviewsProps {
@@ -27,7 +26,6 @@ const GameReviews: React.FC<GameReviewsProps> = ({ gameId }) => {
         const response = await fetch(`https://api.rawg.io/api/games/${gameId}/reviews?key=${API_KEY}`);
         if (!response.ok) throw new Error('Failed to fetch reviews');
         const data = await response.json();
-        console.log(data); // Log the API response to inspect its structure
         setReviews(data.results);
       } catch (err) {
         setError(err instanceof Error ? err.message : 'Unknown error');
@@ -50,7 +48,9 @@ const GameReviews: React.FC<GameReviewsProps> = ({ gameId }) => {
       ) : (
         reviews.map((review) => (
           <div key={review.id} className="review-card">
-            <p className="review-text">"{review.text}"</p>
+            <p className="review-text">
+              {review.text.replace(/<[^>]*>/g, '')}
+            </p>
             <p className="review-author">- {review.user?.username || 'Anonymous'}</p>
             <p className="review-date">
               {review.created_at ? new Date(review.created_at).toLocaleDateString() : 'Unknown date'}
