@@ -1,62 +1,48 @@
 .game-details {
-    min-height: 100vh;
-    height: auto;
-    overflow-y: auto;
-    display: flex;
-    flex-direction: row;
+    min-height: 100vh; /* Ensure it takes at least the full viewport height */
+    height: auto; /* Allow the height to grow based on content */
+    overflow-y: auto; /* Enable scrolling for the entire page */
+    display: flex; /* Use flexbox for layout */
+    flex-direction: row; /* Arrange children horizontally by default */
     box-sizing: border-box;
-    gap: 20px;
-    padding: 20px;
+    gap: 20px; /* Add spacing between the main content and reviews */
+    padding: 20px; /* Add padding around the container */
 }
 
 .game-main {
-    flex: 2;
+    flex: 2; /* Take up 2/3 of the width */
     display: flex;
     flex-direction: column;
 }
 
 .game-reviews {
-    flex: 1;
-    max-width: 400px;
-    background-color: #222222;
-    border-left: 1px solid #444;
-    padding: 20px;
+    flex: 1; /* Take up 1/3 of the width */
+    max-width: 400px; /* Optional: Limit the width of the reviews section */
+    background-color: #222222; /* Match the dark theme */
+    border-left: 1px solid #444; /* Add a border to separate the reviews */
+    padding: 20px; /* Add padding inside the reviews section */
     box-sizing: border-box;
-    overflow-y: auto;
+    overflow-y: auto; /* Allow scrolling within the reviews section if needed */
 }
 
 .rating-container {
     display: flex;
     align-items: center;
     margin-top: 20px;
-    gap: 15px;
-    flex-wrap: wrap;
-}
-
-.rating-stars {
-    color: gold;
-    font-size: 1.2rem;
-    margin-right: 5px;
-}
-
-.rating-value {
-    font-weight: bold;
-    margin-right: 15px;
 }
 
 .game-release {
-    margin-left: 0;
-    color: #aaa;
-    font-size: 1rem;
+    margin-left: 32px;
 }
 
 .game-image {
-    max-width: 100%;
-    width: auto;
-    height: auto;
+    max-width: 100%; /* Ensure the image doesn't exceed the container width */
+    width: auto; /* Allow the image to shrink */
+    height: auto; /* Maintain aspect ratio */
     border-radius: 20px;
     margin-top: 28px;
     margin-bottom: 38px;
+
     cursor: pointer;
     transition: all 0.5s ease-in-out;
 }
@@ -66,20 +52,25 @@
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
 }
 
+/* BOTÕES */
 .game-buttons {
     display: flex;
     gap: 28px;
     margin-top: 20px;
 }
 
+
+/* BOTÃO DE ADICIONAR NA LISTA DE MY GAMES*/
 .buttons-my-game {
     background-color: #222222;
+
     display: flex;
     align-items: center;
     align-content: center;
     gap: 10px;
     width: 200px;
     height: 70px;
+
     cursor: pointer;
     transition: all 0.5s ease-in-out;
 }
@@ -92,17 +83,18 @@
     transform: scale(1.05);
 }
 
-.buttons-my-game-left {
+/* lado esquerdo do botão (ícone) */
+.buttons-my-game-left{
     display: flex;
     flex-direction: column;
 }
 
-.button-img {
+.button-img{
     width: 40px;
     height: auto;
 }
 
-.buttons-my-game-right {
+.buttons-my-game-right{
     display: flex;
     flex-direction: column;
     margin-left: 12px;
@@ -118,14 +110,17 @@
     font-size: 18px;
 }
 
+/* BOTÃO DE ADICIONAR NA WISHLIST*/
 .buttons-wishlist {
     background-color: #222222;
+
     display: flex;
     align-items: center;
     align-content: center;
     gap: 10px;
     width: 200px;
     height: 70px;
+
     cursor: pointer;
     transition: all 0.5s ease-in-out;
 }
@@ -138,17 +133,24 @@
     transform: scale(1.05);
 }
 
-.buttons-wishlist-left {
+.buttons-wishlist-left{
     display: flex;
     flex-direction: column;
 }
 
-.buttons-wishlist-right {
+.button-img{
+    width: 40px;
+    height: auto;
+}
+
+.buttons-wishlist-right{
     display: flex;
     flex-direction: column;
     margin-left: 12px;
     align-items: flex-start;
 }
+
+/* TEXTO E INFORMAÇÕES DO JOGO*/
 
 .game-info {
     margin-top: 50px;
@@ -161,51 +163,49 @@
     margin-bottom: 20px;
 }
 
-.game-description {
+.game-description{
     font-size: 18px;
     line-height: 1.5;
     margin-bottom: 20px;
-    max-width: 70%;
-    white-space: pre-line;
+    max-width: 70%; /* só em telas grande, PRECISA MUDAR PARA TELAS MENORES*/
 }
 
+.game-release{
+    font-size: 20px;
+    line-height: 1.5;
+    margin-bottom: 20px;
+    max-width: 600px; /* só em telas grande, PRECISA MUDAR PARA TELAS MENORES*/
+}
+
+/* Media query for smaller screens */
 @media (max-width: 768px) {
     .game-details {
-        flex-direction: column;
-        align-items: center;
+        flex-direction: column; /* Stack elements vertically */
+        align-items: center; /* Center the content horizontally */
     }
 
     .game-main {
-        width: 100%;
+        width: 100%; /* Ensure the main content takes the full width */
     }
 
     .game-reviews {
-        border-left: none;
-        border-top: 1px solid #444;
-        max-width: 100%;
+        border-left: none; /* Remove the left border */
+        border-top: 1px solid #444; /* Add a top border instead */
+        max-width: 100%; /* Allow the reviews section to take full width */
     }
 
     .game-image {
-        width: 100%;
-        max-width: 100%;
-        height: auto;
+        width: 100%; /* Shrink the image to 90% of the screen width */
+        max-width: 100%; /* Ensure it doesn't exceed 90% */
+        height: auto; /* Maintain aspect ratio */
         margin-top: 20px;
         margin-bottom: 20px;
     }
 
     .game-description {
-        max-width: 100%;
-        font-size: 16px;
-        line-height: 1.4;
-        text-align: justify;
-    }
-
-    .game-buttons {
-        flex-direction: column;
-        gap: 15px;
-    }
-
-    .rating-container {
-        gap: 10px;
+        max-width: 100%; /* Allow the description to take the full width */
+        font-size: 16px; /* Adjust font size for better readability */
+        line-height: 1.4; /* Slightly reduce line height */
+        text-align: justify; /* Improve text alignment for smaller screens */
     }
 }
