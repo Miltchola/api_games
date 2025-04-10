@@ -10,47 +10,54 @@ import home from '../../assets/Icons/home.png'
 import book from '../../assets/Icons/book.png';
 import wishlist from '../../assets/Icons/wishlist.png'
 
+import { useNavigate } from 'react-router-dom';
+
 interface SideBarProps {
   isVisible: boolean;
   setSortBy: (sortBy: 'ratingPositive' | 'ratingNegative' | 'name' | 'isTrending' | 'id') => void;
 }
 
 const SideBar: React.FC<SideBarProps> = ({ isVisible, setSortBy }) => {
+  const navigate = useNavigate(); 
+
   return (
     <div className={`sidebar ${isVisible ? 'visible' : ''}`}>
-
       <div className="top">
         <h3 className="top-text">Trending Games</h3>
       </div>
 
       <div className="sections">
-        <button className="sections_button" onClick={() => setSortBy('id')}>
-            <img className="section-icon" src={home} alt="" />
-            <h6 className="section-text">Home</h6>
+        <button
+          className="sections_button"
+          onClick={() => {
+            setSortBy('id'); 
+            navigate('/'); 
+          }}
+        >
+          <img className="section-icon" src={home} alt="" />
+          <h6 className="section-text">Home</h6>
         </button>
       </div>
-      
+
       <div className="top">
         <h3 className="top-text">User</h3>
       </div>
 
       <div className="sections">
-
         <button className="sections_button">
-            <img className="section-icon" src={user} alt="" />
-            <h6 className="section-text">User account</h6>
+          <img className="section-icon" src={user} alt="" />
+          <h6 className="section-text">User account</h6>
         </button>
 
         <button className="sections_button">
-            <img className="section-icon" src={wishlist} alt="" />
-            <h6 className="section-text">Wishlist</h6>
+          <img className="section-icon" src={wishlist} alt="" />
+          <h6 className="section-text">Wishlist</h6>
         </button>
 
         <button className="sections_button">
           <img className="section-icon" src={book} alt="" />
           <h6 className="section-text">My Library</h6>
         </button>
-
       </div>
 
       <div className="top">
@@ -58,7 +65,6 @@ const SideBar: React.FC<SideBarProps> = ({ isVisible, setSortBy }) => {
       </div>
 
       <div className="sections">
-
         <button className="sections_button" onClick={() => setSortBy('name')}>
           <img className="section-icon" src={letra} alt="" />
           <h6 className="section-text">Name</h6>
