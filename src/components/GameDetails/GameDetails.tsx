@@ -55,7 +55,8 @@ const GameDetails: React.FC = () => {
             {'☆'.repeat(5 - Math.round(game.rating))}
           </span>
           <span className="rating-value">{game.rating.toFixed(1)}/5</span>
-          <p className="game-release">Released: {game.released}</p>
+
+
         </div>
 
         <img 
