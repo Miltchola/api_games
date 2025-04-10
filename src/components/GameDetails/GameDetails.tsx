@@ -40,45 +40,16 @@ const GameDetails: React.FC = () => {
     fetchGameDetails();
   }, [id]);
 
-  const renderStarRating = (rating: number) => {
-    const fullStars = Math.floor(rating);
-    const decimalPart = rating - fullStars;
-    const stars = [];
-
-    // Add full stars
-    for (let i = 0; i < fullStars; i++) {
-      stars.push(<span key={`full-${i}`}>★</span>);
-    }
-
-    // Add half star if needed
-    if (decimalPart >= 0.25 && decimalPart < 0.75) {
-      stars.push(<span key="half" className="half-star">⯨</span>);
-    } 
-    // Add an extra full star if decimal is 0.75 or above
-    else if (decimalPart >= 0.75) {
-      stars.push(<span key="extra-full">★</span>);
-    }
-
-    // Fill the rest with empty stars
-    while (stars.length < 5) {
-      stars.push(<span key={`empty-${stars.length}`}>☆</span>);
-    }
-
-    return stars;
-  };
 
   if (loading) return <div>Loading game details...</div>;
   if (error) return <div>Error: {error}</div>;
   if (!game) return <div>Game not found</div>;
+@@ -51,55 +78,54 @@
 
-  return (
-    <div className="game-details">
-      <div className="game-main">
-        <h1 className="game-title">{game.name}</h1>
-        
         <div className="rating-container">
           <span className="rating-stars">
-            {renderStarRating(game.rating)}
+            {'★'.repeat(Math.round(game.rating))}
+            {'☆'.repeat(5 - Math.round(game.rating))}
           </span>
           <span className="rating-value">{game.rating.toFixed(1)}/5</span>
           <p className="game-release">Released: {game.released}</p>
