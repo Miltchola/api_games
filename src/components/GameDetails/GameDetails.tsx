@@ -87,13 +87,10 @@ const GameDetails: React.FC = () => {
           </button>
         </div>
 
-       <p className="game-description">
-  {game.description
-    .replace(/<[^>]*>/g, '')  
-    .replace(/&quot;/g, '"')   
-    .replace(/&#39;/g, "'")     
-  }
-
+<div className="game-info">
+          <h3 className="info-title">About the Game</h3>
+          <p className="game-description">
+            {game.description.replace(/<[^>]*>/g, '')}
 
             
           </p>
