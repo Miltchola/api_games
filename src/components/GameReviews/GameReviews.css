@@ -1,12 +1,9 @@
 .reviews-container {
-    padding: 20px;
-    background-color: #222222; /* Match dark background */
-    border-left: 1px solid #444; /* Darker border */
-    color: #f0f0f0; /* Light text color */
-    width: 100%; /* Ensure it takes full width */
-    box-sizing: border-box; /* Include padding in width calculation */
-    height: auto; /* Allow the height to grow based on content */
-    overflow: visible; /* Ensure no internal scrolling */
+    display: flex;
+    flex-direction: column;
+    gap: 20px; /* Add spacing between reviews */
+    width: 100%; /* Ensure it takes the full width of the parent */
+    box-sizing: border-box;
 }
 
 .reviews-title {
@@ -14,6 +11,7 @@
     font-weight: bold;
     margin-bottom: 20px;
     color: #f0f0f0; /* Light text color */
+    text-align: center;
 }
 
 .review-card {
