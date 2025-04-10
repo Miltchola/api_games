@@ -87,23 +87,14 @@ const GameDetails: React.FC = () => {
           </button>
         </div>
 
-        
-      <div className="game-info">
-  <h3 className="info-title">About the Game</h3>
-  <p className="game-description">
-    {game.description
-      .replace(/<[^>]*>/g, '') // Remove todas as tags HTML
-      .replace(/&quot;/g, '"')  // Substitui &quot; por aspas "
-      .replace(/&#39;/g, "'")   // Substitui &#39; por apóstrofo '
-      .replace(/&amp;/g, '&')   // Substitui &amp; por &
-      .replace(/&lt;/g, '<')    // Substitui &lt; por <
-      .replace(/&gt;/g, '>')    // Substitui &gt; por >
-      .replace(/&nbsp;/g, ' ')  // Substitui &nbsp; por espaço
-      .replace(/\s+/g, ' ')     // Remove espaços múltiplos
-      .trim()                   // Remove espaços no início/fim
-    }
-  </p>
-</div>
+        <div className="game-info">
+          <h3 className="info-title">About the Game</h3>
+          <p className="game-description">
+            {game.description.replace(/<[^>]*>/g, '')}
+   
+
+            
+          </p>
 
           
           <h3 className="info-title">Release Date: {game.released}</h3>
