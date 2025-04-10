@@ -27,7 +27,7 @@ const GameList: React.FC<GameListProps> = ({ sortBy, searchQuery }) => {
       try {
         setLoading(true);
         const response = await fetch(
-          `https://api.rawg.io/api/games?key=${API_KEY}&dates=2015-01-01,2024-12-31&ordering=-added&page_size=21`
+          `https://api.rawg.io/api/games?key=${API_KEY}&dates=2015-01-01,2024-12-31&ordering=-added&page_size=100`
         );
 
         if (!response.ok) throw new Error('Failed to fetch games');
