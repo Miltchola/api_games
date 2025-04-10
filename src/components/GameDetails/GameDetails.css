@@ -1,211 +1,162 @@
 .game-details {
-    min-height: 100vh;
-    height: auto;
-    overflow-y: auto;
-    display: flex;
-    flex-direction: row;
-    box-sizing: border-box;
-    gap: 20px;
-    padding: 20px;
+  min-height: 100vh;
+  height: auto;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: row;
+  box-sizing: border-box;
+  gap: 20px;
+  padding: 20px;
 }
 
 .game-main {
-    flex: 2;
-    display: flex;
-    flex-direction: column;
+  flex: 2;
+  display: flex;
+  flex-direction: column;
 }
 
 .game-reviews {
-    flex: 1;
-    max-width: 400px;
-    background-color: #222222;
-    border-left: 1px solid #444;
-    padding: 20px;
-    box-sizing: border-box;
-    overflow-y: auto;
+  flex: 1;
+  max-width: 400px;
+  background-color: #222222;
+  border-left: 1px solid #444;
+  padding: 20px;
+  box-sizing: border-box;
+  overflow-y: auto;
 }
 
 .rating-container {
-    display: flex;
-    align-items: center;
-    margin-top: 20px;
-    gap: 15px;
-    flex-wrap: wrap;
+  display: flex;
+  align-items: center;
+  margin-top: 20px;
+  gap: 10px;
 }
 
 .rating-stars {
-    color: gold;
-    font-size: 1.2rem;
-    margin-right: 5px;
+  display: inline-flex;
+  align-items: center;
+  font-size: 1.2rem;
+  color: gold;
+  letter-spacing: 2px;
+}
+
+.rating-stars span {
+  display: inline-block;
+  width: 1em;
+  text-align: center;
+}
+
+.half-star {
+  font-size: 1.1rem;
+  position: relative;
+  top: -0.1em;
+  margin: 0 -0.15em;
 }
 
 .rating-value {
-    font-weight: bold;
-    margin-right: 15px;
+  font-weight: bold;
 }
 
 .game-release {
-    margin-left: 0;
-    color: #aaa;
-    font-size: 1rem;
+  color: #aaa;
+  font-size: 1rem;
 }
 
+/* Resto do seu CSS existente... */
 .game-image {
-    max-width: 100%;
-    width: auto;
-    height: auto;
-    border-radius: 20px;
-    margin-top: 28px;
-    margin-bottom: 38px;
-    cursor: pointer;
-    transition: all 0.5s ease-in-out;
+  max-width: 100%;
+  width: auto;
+  height: auto;
+  border-radius: 20px;
+  margin-top: 28px;
+  margin-bottom: 38px;
+  cursor: pointer;
+  transition: all 0.5s ease-in-out;
 }
 
 .game-image:hover {
-    transform: scale(1.05);
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+  transform: scale(1.05);
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
 }
 
 .game-buttons {
-    display: flex;
-    gap: 28px;
-    margin-top: 20px;
+  display: flex;
+  gap: 28px;
+  margin-top: 20px;
 }
 
-.buttons-my-game {
-    background-color: #222222;
-    display: flex;
-    align-items: center;
-    align-content: center;
-    gap: 10px;
-    width: 200px;
-    height: 70px;
-    cursor: pointer;
-    transition: all 0.5s ease-in-out;
+.buttons-my-game,
+.buttons-wishlist {
+  background-color: #222222;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 200px;
+  height: 70px;
+  cursor: pointer;
+  transition: all 0.5s ease-in-out;
+  border: none;
+  color: white;
+  padding: 0 15px;
+  border-radius: 8px;
 }
 
-.buttons-my-game:hover {
-    background-color: #f0f0f0;
-    border: 0px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-    color: black;
-    transform: scale(1.05);
-}
-
-.buttons-my-game-left {
-    display: flex;
-    flex-direction: column;
+.buttons-my-game:hover,
+.buttons-wishlist:hover {
+  background-color: #f0f0f0;
+  color: black;
+  transform: scale(1.05);
 }
 
 .button-img {
-    width: 40px;
-    height: auto;
-}
-
-.buttons-my-game-right {
-    display: flex;
-    flex-direction: column;
-    margin-left: 12px;
-    align-items: flex-start;
+  width: 40px;
+  height: auto;
 }
 
 .button-subtext {
-    font-size: 10px;
-    color: #a5a5a5;
+  font-size: 10px;
+  color: #a5a5a5;
 }
 
 .button-text {
-    font-size: 18px;
-}
-
-.buttons-wishlist {
-    background-color: #222222;
-    display: flex;
-    align-items: center;
-    align-content: center;
-    gap: 10px;
-    width: 200px;
-    height: 70px;
-    cursor: pointer;
-    transition: all 0.5s ease-in-out;
-}
-
-.buttons-wishlist:hover {
-    background-color: #f0f0f0;
-    border: 0px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-    color: black;
-    transform: scale(1.05);
-}
-
-.buttons-wishlist-left {
-    display: flex;
-    flex-direction: column;
-}
-
-.buttons-wishlist-right {
-    display: flex;
-    flex-direction: column;
-    margin-left: 12px;
-    align-items: flex-start;
+  font-size: 18px;
+  margin: 0;
 }
 
 .game-info {
-    margin-top: 50px;
+  margin-top: 50px;
 }
 
 .info-title {
-    font-size: 30px;
-    font-weight: bold;
-    margin-top: 20px;
-    margin-bottom: 20px;
+  font-size: 30px;
+  font-weight: bold;
+  margin: 20px 0;
 }
 
 .game-description {
-    font-size: 18px;
-    line-height: 1.5;
-    margin-bottom: 20px;
-    max-width: 70%;
-    white-space: pre-line;
+  font-size: 18px;
+  line-height: 1.5;
+  margin-bottom: 20px;
+  max-width: 90%;
+  white-space: pre-line;
 }
 
 @media (max-width: 768px) {
-    .game-details {
-        flex-direction: column;
-        align-items: center;
-    }
-
-    .game-main {
-        width: 100%;
-    }
-
-    .game-reviews {
-        border-left: none;
-        border-top: 1px solid #444;
-        max-width: 100%;
-    }
-
-    .game-image {
-        width: 100%;
-        max-width: 100%;
-        height: auto;
-        margin-top: 20px;
-        margin-bottom: 20px;
-    }
-
-    .game-description {
-        max-width: 100%;
-        font-size: 16px;
-        line-height: 1.4;
-        text-align: justify;
-    }
-
-    .game-buttons {
-        flex-direction: column;
-        gap: 15px;
-    }
-
-    .rating-container {
-        gap: 10px;
-    }
+  .game-details {
+    flex-direction: column;
+  }
+  
+  .game-reviews {
+    max-width: 100%;
+    border-left: none;
+    border-top: 1px solid #444;
+  }
+  
+  .game-buttons {
+    flex-direction: column;
+  }
+  
+  .game-description {
+    max-width: 100%;
+  }
 }
