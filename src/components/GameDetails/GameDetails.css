@@ -1,10 +1,28 @@
 .game-details {
     min-height: 100vh; /* Ensure it takes at least the full viewport height */
     height: auto; /* Allow the height to grow based on content */
-    overflow-y: hidden; /* Enable scrolling for the entire page */
+    overflow-y: auto; /* Enable scrolling for the entire page */
+    display: flex; /* Use flexbox for layout */
+    flex-direction: row; /* Arrange children horizontally by default */
+    box-sizing: border-box;
+    gap: 20px; /* Add spacing between the main content and reviews */
+    padding: 20px; /* Add padding around the container */
+}
+
+.game-main {
+    flex: 2; /* Take up 2/3 of the width */
     display: flex;
     flex-direction: column;
+}
+
+.game-reviews {
+    flex: 1; /* Take up 1/3 of the width */
+    max-width: 400px; /* Optional: Limit the width of the reviews section */
+    background-color: #222222; /* Match the dark theme */
+    border-left: 1px solid #444; /* Add a border to separate the reviews */
+    padding: 20px; /* Add padding inside the reviews section */
     box-sizing: border-box;
+    overflow-y: auto; /* Allow scrolling within the reviews section if needed */
 }
 
 .rating-container {
@@ -18,8 +36,9 @@
 }
 
 .game-image {
-    width: 600px;
-    height: auto;
+    max-width: 100%; /* Ensure the image doesn't exceed the container width */
+    width: auto; /* Allow the image to shrink */
+    height: auto; /* Maintain aspect ratio */
     border-radius: 20px;
     margin-top: 28px;
     margin-bottom: 38px;
@@ -158,3 +177,35 @@
     max-width: 600px; /* só em telas grande, PRECISA MUDAR PARA TELAS MENORES*/
 }
 
+/* Media query for smaller screens */
+@media (max-width: 768px) {
+    .game-details {
+        flex-direction: column; /* Stack elements vertically */
+        align-items: center; /* Center the content horizontally */
+    }
+
+    .game-main {
+        width: 100%; /* Ensure the main content takes the full width */
+    }
+
+    .game-reviews {
+        border-left: none; /* Remove the left border */
+        border-top: 1px solid #444; /* Add a top border instead */
+        max-width: 100%; /* Allow the reviews section to take full width */
+    }
+
+    .game-image {
+        width: 100%; /* Shrink the image to 90% of the screen width */
+        max-width: 100%; /* Ensure it doesn't exceed 90% */
+        height: auto; /* Maintain aspect ratio */
+        margin-top: 20px;
+        margin-bottom: 20px;
+    }
+
+    .game-description {
+        max-width: 100%; /* Allow the description to take the full width */
+        font-size: 16px; /* Adjust font size for better readability */
+        line-height: 1.4; /* Slightly reduce line height */
+        text-align: justify; /* Improve text alignment for smaller screens */
+    }
+}
