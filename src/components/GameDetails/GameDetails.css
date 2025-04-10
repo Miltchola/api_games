@@ -37,21 +37,6 @@
     color: gold;
     font-size: 1.2rem;
     margin-right: 5px;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 }
 
 .rating-value {
@@ -65,7 +50,6 @@
     font-size: 1rem;
 }
 
-
 .game-image {
     max-width: 100%;
     width: auto;
@@ -73,14 +57,14 @@
     border-radius: 20px;
     margin-top: 28px;
     margin-bottom: 38px;
+
     cursor: pointer;
     transition: all 0.5s ease-in-out;
 }
-
-.game-image:hover {
-    transform: scale(1.05);
+@@ -52,25 +66,20 @@
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
 }
+
 
 .game-buttons {
     display: flex;
@@ -88,39 +72,29 @@
     margin-top: 20px;
 }
 
+
+
 .buttons-my-game {
     background-color: #222222;
+
     display: flex;
     align-items: center;
     align-content: center;
     gap: 10px;
     width: 200px;
     height: 70px;
+
     cursor: pointer;
     transition: all 0.5s ease-in-out;
 }
-
-.buttons-my-game:hover {
-    background-color: #f0f0f0;
-    border: 0px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-    color: black;
+@@ -83,18 +92,17 @@
     transform: scale(1.05);
 }
 
 .buttons-my-game-left {
+
     display: flex;
     flex-direction: column;
-
-
-
-
-
-
-
-
-
-
 }
 
 .button-img {
@@ -132,35 +106,25 @@
     display: flex;
     flex-direction: column;
     margin-left: 12px;
-    align-items: flex-start;
-}
-
-.button-subtext {
-    font-size: 10px;
-    color: #a5a5a5;
-}
-
-.button-text {
+@@ -110,17 +118,14 @@
     font-size: 18px;
 }
 
+
 .buttons-wishlist {
     background-color: #222222;
+
     display: flex;
     align-items: center;
     align-content: center;
     gap: 10px;
     width: 200px;
     height: 70px;
+
     cursor: pointer;
     transition: all 0.5s ease-in-out;
 }
-
-.buttons-wishlist:hover {
-    background-color: #f0f0f0;
-    border: 0px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-    color: black;
+@@ -133,25 +138,18 @@
     transform: scale(1.05);
 }
 
@@ -170,20 +134,23 @@
 }
 
 .buttons-wishlist-right {
+
+
+
+
+
     display: flex;
     flex-direction: column;
     margin-left: 12px;
     align-items: flex-start;
 }
 
+
+
 .game-info {
     margin-top: 50px;
 }
-
-.info-title {
-    font-size: 30px;
-    font-weight: bold;
-    margin-top: 20px;
+@@ -163,49 +161,51 @@
     margin-bottom: 20px;
 }
 
@@ -193,7 +160,14 @@
     margin-bottom: 20px;
     max-width: 70%;
     white-space: pre-line;
+
+
+
+
+
+
 }
+
 
 @media (max-width: 768px) {
     .game-details {
