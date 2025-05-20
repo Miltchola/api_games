@@ -4,6 +4,8 @@ import Header from './components/Header/Header';
 import SideBar from './components/SideBar/SideBar';
 import GameList from './components/GameList/GameList';
 import GameDetails from './components/GameDetails/GameDetails';
+import Login from './components/Login/Login'; // ajuste o caminho se necessário
+import Register from './components/Login/Register'; // Adicione este import
 
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
@@ -37,6 +39,8 @@ function App() {
               />
               {/* Atualiza o page-content da página ao clicar em um Card */}
               <Route path="/game/:id" element={<GameDetails />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/signup" element={<Register />} /> {/* Adicione esta linha */}
 
             </Routes>
           </div>

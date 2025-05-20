@@ -44,7 +44,10 @@ const SideBar: React.FC<SideBarProps> = ({ isVisible, setSortBy }) => {
       </div>
 
       <div className="sections">
-        <button className="sections_button">
+        <button
+          className="sections_button"
+          onClick={() => navigate('/login')}
+        >
           <img className="section-icon" src={user} alt="" />
           <h6 className="section-text">User account</h6>
         </button>
