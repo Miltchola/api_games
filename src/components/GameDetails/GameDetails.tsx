@@ -4,6 +4,7 @@ import './GameDetails.css';
 import plus from '../../assets/Icons/plus.png';
 import love from '../../assets/Icons/love.png';
 import GameReviews from '../GameReviews/GameReviews';
+import { useWishlist } from '../Wishlist/WishlistContext';
 
 interface GameDetailsProps {
   id: number;
@@ -19,8 +20,11 @@ const GameDetails: React.FC = () => {
   const [game, setGame] = useState<GameDetailsProps | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const { wishlist, addToWishlist, removeFromWishlist } = useWishlist();
 
   const API_KEY = 'ac25b624a98d4348bc5c4a45abb34eed';
+
+  const isInWishlist = game && wishlist.includes(Number(game.id));
 
   useEffect(() => {
     const fetchGameDetails = async () => {
@@ -76,12 +80,19 @@ const GameDetails: React.FC = () => {
             </div>
           </button>
 
-          <button className="buttons-wishlist">
+          <button
+            className="buttons-wishlist"
+            onClick={() => {
+              if (game) {
+                isInWishlist ? removeFromWishlist(Number(game.id)) : addToWishlist(Number(game.id));
+              }
+            }}
+          >
             <div className="buttons-wishlist-left">
               <img className="button-img" src={love} alt="Love icon" />
             </div>
             <div className="buttons-wishlist-right">
-              <p className="button-subtext">Add to</p>
+              <p className="button-subtext">{isInWishlist ? 'Remove from' : 'Add to'}</p>
               <h6 className="button-text">Wishlist</h6>
             </div>
           </button>
