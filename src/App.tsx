@@ -6,6 +6,9 @@ import GameList from './components/GameList/GameList';
 import GameDetails from './components/GameDetails/GameDetails';
 import Login from './components/Login/Login'; // ajuste o caminho se necessário
 import Register from './components/Login/Register'; // Adicione este import
+import { AuthProvider } from './components/User/AuthContext';
+import UserAccount from './components/User/UserAccount';
+import ProtectedRoute from './components/User/ProtectedRoute';
 
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
@@ -19,34 +22,44 @@ function App() {
   };
 
   return (
-    <Router>
-      <div className="app-container">
-        <Header toggleSidebar={toggleSidebar} setSearchQuery={setSearchQuery} />
-        <div className="main-content">
-          <SideBar isVisible={sidebarVisible} setSortBy={setSortBy} />
-          <div className="page-content">
-            <Routes>
+    <AuthProvider>
+      <Router>
+        <div className="app-container">
+          <Header toggleSidebar={toggleSidebar} setSearchQuery={setSearchQuery} />
+          <div className="main-content">
+            <SideBar isVisible={sidebarVisible} setSortBy={setSortBy} />
+            <div className="page-content">
+              <Routes>
 
-              <Route
-                path="/"
-                element={
-                  <>
-                    <h2 className="section-title">New and trending</h2>
-                    <p className="section-subtitle">Based on player counts and release date</p>
-                    <GameList sortBy={sortBy} searchQuery={searchQuery} />
-                  </>
-                }
-              />
-              {/* Atualiza o page-content da página ao clicar em um Card */}
-              <Route path="/game/:id" element={<GameDetails />} />
-              <Route path="/login" element={<Login />} />
-              <Route path="/signup" element={<Register />} /> {/* Adicione esta linha */}
+                <Route
+                  path="/"
+                  element={
+                    <>
+                      <h2 className="section-title">New and trending</h2>
+                      <p className="section-subtitle">Based on player counts and release date</p>
+                      <GameList sortBy={sortBy} searchQuery={searchQuery} />
+                    </>
+                  }
+                />
+                {/* Atualiza o page-content da página ao clicar em um Card */}
+                <Route path="/game/:id" element={<GameDetails />} />
+                <Route path="/login" element={<Login />} />
+                <Route path="/signup" element={<Register />} /> {/* Adicione esta linha */}
+                <Route
+                  path="/account"
+                  element={
+                    <ProtectedRoute>
+                      <UserAccount />
+                    </ProtectedRoute>
+                  }
+                />
 
-            </Routes>
+              </Routes>
+            </div>
           </div>
         </div>
-      </div>
-    </Router>
+      </Router>
+    </AuthProvider>
   );
 }
 

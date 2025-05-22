@@ -1,4 +1,5 @@
 import "./SideBar.css";
+import { useAuth } from '../User/AuthContext'; // Verificação de autenticação
 
 import letra from '../../assets/Icons/letra a.png'
 import fire from '../../assets/Icons/fire.png';
@@ -19,6 +20,7 @@ interface SideBarProps {
 
 const SideBar: React.FC<SideBarProps> = ({ isVisible, setSortBy }) => {
   const navigate = useNavigate(); 
+  const { isAuthenticated } = useAuth(); // Use o contexto
 
   return (
     <div className={`sidebar ${isVisible ? 'visible' : ''}`}>
@@ -46,7 +48,13 @@ const SideBar: React.FC<SideBarProps> = ({ isVisible, setSortBy }) => {
       <div className="sections">
         <button
           className="sections_button"
-          onClick={() => navigate('/login')}
+          onClick={() => {
+            if (isAuthenticated) {
+              navigate('/account');
+            } else {
+              navigate('/login');
+            }
+          }}
         >
           <img className="section-icon" src={user} alt="" />
           <h6 className="section-text">User account</h6>

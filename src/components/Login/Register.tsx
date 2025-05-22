@@ -41,7 +41,7 @@ const Register: React.FC = () => {
       }
 
       // Substitua pela chamada real à sua API
-      const response = await fetch('http://localhost:3000/register', {
+      const response = await fetch('http://localhost:3000/users/register', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

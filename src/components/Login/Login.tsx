@@ -1,18 +1,22 @@
 import React, { useState } from 'react';
 import './Login.css';
+import { useAuth } from '../User/AuthContext';
+import { useNavigate } from 'react-router-dom';
 
 interface LoginFormData {
-  email: string;
+  username: string;
   password: string;
 }
 
 const Login: React.FC = () => {
   const [formData, setFormData] = useState<LoginFormData>({
-    email: '',
+    username: '',
     password: ''
   });
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
+  const { login } = useAuth();
+  const navigate = useNavigate();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { id, value } = e.target;
@@ -28,8 +32,7 @@ const Login: React.FC = () => {
     setError(null);
 
     try {
-      // Substitua pela chamada real à sua API
-      const response = await fetch('http://localhost:3000/login', {
+      const response = await fetch('http://localhost:3000/users/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -42,12 +45,13 @@ const Login: React.FC = () => {
       }
 
       const data = await response.json();
-      // Armazene o token JWT ou redirecione o usuário
-      console.log('Login bem-sucedido:', data);
-      
-      // Redirecionar para a página principal após login
-      // window.location.href = '/dashboard';
-      
+      // Salve o token JWT
+      localStorage.setItem('token', data.token);
+      localStorage.setItem('username', formData.username); // Salve o username
+      login(); // Atualiza o contexto de autenticação
+
+      // Redirecione para a tela de conta do usuário
+      navigate('/account');
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Ocorreu um erro ao fazer login');
     } finally {
@@ -63,12 +67,12 @@ const Login: React.FC = () => {
         {error && <div className="error-message">{error}</div>}
         
         <div className="form-group">
-          <label htmlFor="email" className="form-label">Email:</label>
+          <label htmlFor="username" className="form-label">Username:</label>
           <input
-            type="email"
-            id="email"
+            type="text"
+            id="username"
             className="form-input"
-            value={formData.email}
+            value={formData.username}
             onChange={handleChange}
             required
           />
