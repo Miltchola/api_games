@@ -68,7 +68,10 @@ const SideBar: React.FC<SideBarProps> = ({ isVisible, setSortBy }) => {
           <h6 className="section-text">Wishlist</h6>
         </button>
 
-        <button className="sections_button">
+        <button
+          className="sections_button"
+          onClick={() => navigate('/library')}
+        >
           <img className="section-icon" src={book} alt="" />
           <h6 className="section-text">My Library</h6>
         </button>

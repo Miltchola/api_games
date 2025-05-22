@@ -5,6 +5,7 @@ import plus from '../../assets/Icons/plus.png';
 import love from '../../assets/Icons/love.png';
 import GameReviews from '../GameReviews/GameReviews';
 import { useWishlist } from '../Wishlist/WishlistContext';
+import { useLibrary } from '../Library/LibraryContext';
 
 interface GameDetailsProps {
   id: number;
@@ -21,10 +22,12 @@ const GameDetails: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const { wishlist, addToWishlist, removeFromWishlist } = useWishlist();
+  const { library, addToLibrary, removeFromLibrary } = useLibrary();
 
   const API_KEY = 'ac25b624a98d4348bc5c4a45abb34eed';
 
   const isInWishlist = game && wishlist.includes(Number(game.id));
+  const isInLibrary = game && library.includes(Number(game.id));
 
   useEffect(() => {
     const fetchGameDetails = async () => {
@@ -70,12 +73,21 @@ const GameDetails: React.FC = () => {
         />
 
         <div className="game-buttons">
-          <button className="buttons-my-game">
+          <button
+            className="buttons-my-game"
+            onClick={() => {
+              if (game) {
+                isInLibrary
+                  ? removeFromLibrary(Number(game.id))
+                  : addToLibrary(Number(game.id));
+              }
+            }}
+          >
             <div className="buttons-my-game-left">
               <img className="button-img" src={plus} alt="Plus icon" />
             </div>
             <div className="buttons-my-game-right">
-              <p className="button-subtext">Add to</p>
+              <p className="button-subtext">{isInLibrary ? 'Remove from' : 'Add to'}</p>
               <h6 className="button-text">My Games</h6>
             </div>
           </button>
