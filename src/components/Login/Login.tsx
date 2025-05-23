@@ -8,6 +8,9 @@ interface LoginFormData {
   password: string;
 }
 
+const API_URL = import.meta.env.VITE_API_URL;
+
+
 const Login: React.FC = () => {
   const [formData, setFormData] = useState<LoginFormData>({
     username: '',
@@ -32,7 +35,7 @@ const Login: React.FC = () => {
     setError(null);
 
     try {
-      const response = await fetch('http://localhost:3000/users/login', {
+      const response = await fetch(`${API_URL}/users/login`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

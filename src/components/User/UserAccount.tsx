@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import './UserAccount.css';
 import { useNavigate } from 'react-router-dom';
 
+const API_URL = import.meta.env.VITE_API_URL;
+
 interface UserData {
   username: string;
   email: string;
@@ -36,7 +38,7 @@ const UserAccount: React.FC = () => {
         }
 
         const response = await fetch(
-          `http://localhost:3000/users/${encodeURIComponent(username)}`, // Use encodeURIComponent aqui!
+          `${API_URL}/users/${encodeURIComponent(username)}`,
           {
             method: 'GET',
             headers: {
@@ -93,7 +95,7 @@ const UserAccount: React.FC = () => {
         return;
       }
 
-      const response = await fetch('http://localhost:3000/user', {
+      const response = await fetch(`${API_URL}/user`, {
         method: 'PUT',
         headers: {
           'Authorization': `Bearer ${token}`,

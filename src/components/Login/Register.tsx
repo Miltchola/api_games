@@ -7,6 +7,8 @@ interface RegisterFormData {
   password: string;
 }
 
+const API_URL = import.meta.env.VITE_API_URL;
+
 const Register: React.FC = () => {
   const [formData, setFormData] = useState<RegisterFormData>({
     username: '',
@@ -41,7 +43,7 @@ const Register: React.FC = () => {
       }
 
       // Substitua pela chamada real à sua API
-      const response = await fetch('http://localhost:3000/users/register', {
+      const response = await fetch(`${API_URL}/users/register`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
