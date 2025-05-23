@@ -62,7 +62,13 @@ const SideBar: React.FC<SideBarProps> = ({ isVisible, setSortBy }) => {
 
         <button
           className="sections_button"
-          onClick={() => navigate('/wishlist')}
+          onClick={() => {
+            if (isAuthenticated) {
+              navigate('/wishlist');
+            } else {
+              navigate('/login');
+            }
+          }}
         >
           <img className="section-icon" src={wishlist} alt="" />
           <h6 className="section-text">Wishlist</h6>
@@ -70,7 +76,13 @@ const SideBar: React.FC<SideBarProps> = ({ isVisible, setSortBy }) => {
 
         <button
           className="sections_button"
-          onClick={() => navigate('/library')}
+          onClick={() => {
+            if (isAuthenticated) {
+              navigate('/library');
+            } else {
+              navigate('/login');
+            }
+          }}
         >
           <img className="section-icon" src={book} alt="" />
           <h6 className="section-text">My Library</h6>

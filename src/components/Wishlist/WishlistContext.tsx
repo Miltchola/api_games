@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, ReactNode } from 'react';
+import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 
 interface WishlistContextType {
   wishlist: number[];
@@ -9,15 +9,43 @@ interface WishlistContextType {
 const WishlistContext = createContext<WishlistContextType | undefined>(undefined);
 
 export const WishlistProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
+  const [username, setUsername] = useState<string | null>(() => localStorage.getItem('username'));
+  const wishlistKey = username ? `wishlist_${username}` : 'wishlist_guest';
+
   const [wishlist, setWishlist] = useState<number[]>(() => {
-    const stored = localStorage.getItem('wishlist');
+    const stored = localStorage.getItem(wishlistKey);
     return stored ? JSON.parse(stored) : [];
   });
+
+  // Atualiza username e wishlist quando username mudar no localStorage
+  useEffect(() => {
+    const handleStorage = () => {
+      const newUsername = localStorage.getItem('username');
+      setUsername(newUsername);
+      const newKey = newUsername ? `wishlist_${newUsername}` : 'wishlist_guest';
+      const stored = localStorage.getItem(newKey);
+      setWishlist(stored ? JSON.parse(stored) : []);
+    };
+
+    window.addEventListener('storage', handleStorage);
+    // Também verifica mudanças locais (login/logout no mesmo tab)
+    const interval = setInterval(() => {
+      const newUsername = localStorage.getItem('username');
+      if (newUsername !== username) {
+        handleStorage();
+      }
+    }, 500);
+
+    return () => {
+      window.removeEventListener('storage', handleStorage);
+      clearInterval(interval);
+    };
+  }, [username]);
 
   const addToWishlist = (gameId: number) => {
     setWishlist(prev => {
       const updated = prev.includes(gameId) ? prev : [...prev, gameId];
-      localStorage.setItem('wishlist', JSON.stringify(updated));
+      localStorage.setItem(wishlistKey, JSON.stringify(updated));
       return updated;
     });
   };
@@ -25,7 +53,7 @@ export const WishlistProvider: React.FC<{ children: ReactNode }> = ({ children }
   const removeFromWishlist = (gameId: number) => {
     setWishlist(prev => {
       const updated = prev.filter(id => id !== gameId);
-      localStorage.setItem('wishlist', JSON.stringify(updated));
+      localStorage.setItem(wishlistKey, JSON.stringify(updated));
       return updated;
     });
   };

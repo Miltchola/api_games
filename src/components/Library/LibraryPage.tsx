@@ -14,9 +14,11 @@ const API_KEY = 'ac25b624a98d4348bc5c4a45abb34eed';
 const LibraryPage: React.FC = () => {
   const { library, removeFromLibrary } = useLibrary();
   const [games, setGames] = useState<Game[]>([]);
+  const [loading, setLoading] = useState<boolean>(false);
 
   useEffect(() => {
     const fetchGames = async () => {
+      setLoading(true);
       const results: Game[] = [];
       for (const id of library) {
         const res = await fetch(`https://api.rawg.io/api/games/${id}?key=${API_KEY}`);
@@ -26,11 +28,13 @@ const LibraryPage: React.FC = () => {
         }
       }
       setGames(results);
+      setLoading(false);
     };
     if (library.length > 0) fetchGames();
     else setGames([]);
   }, [library]);
 
+  if (loading) return <div className="wishlist-empty">Loading your library...</div>;
   if (games.length === 0)
     return <div className="wishlist-empty">Your library is empty.</div>;
 

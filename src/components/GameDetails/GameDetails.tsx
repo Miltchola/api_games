@@ -6,6 +6,7 @@ import love from '../../assets/Icons/love.png';
 import GameReviews from '../GameReviews/GameReviews';
 import { useWishlist } from '../Wishlist/WishlistContext';
 import { useLibrary } from '../Library/LibraryContext';
+import { useAuth } from '../User/AuthContext';
 
 interface GameDetailsProps {
   id: number;
@@ -23,6 +24,7 @@ const GameDetails: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
   const { wishlist, addToWishlist, removeFromWishlist } = useWishlist();
   const { library, addToLibrary, removeFromLibrary } = useLibrary();
+  const { isAuthenticated } = useAuth();
 
   const API_KEY = 'ac25b624a98d4348bc5c4a45abb34eed';
 
@@ -76,12 +78,17 @@ const GameDetails: React.FC = () => {
           <button
             className="buttons-my-game"
             onClick={() => {
+              if (!isAuthenticated) {
+                alert('You must be logged in to add games to your library.');
+                return;
+              }
               if (game) {
                 isInLibrary
                   ? removeFromLibrary(Number(game.id))
                   : addToLibrary(Number(game.id));
               }
             }}
+            disabled={!isAuthenticated}
           >
             <div className="buttons-my-game-left">
               <img className="button-img" src={plus} alt="Plus icon" />
@@ -95,10 +102,15 @@ const GameDetails: React.FC = () => {
           <button
             className="buttons-wishlist"
             onClick={() => {
+              if (!isAuthenticated) {
+                alert('You must be logged in to add games to your wishlist.');
+                return;
+              }
               if (game) {
                 isInWishlist ? removeFromWishlist(Number(game.id)) : addToWishlist(Number(game.id));
               }
             }}
+            disabled={!isAuthenticated}
           >
             <div className="buttons-wishlist-left">
               <img className="button-img" src={love} alt="Love icon" />
