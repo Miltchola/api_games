@@ -114,6 +114,72 @@
   opacity: 0.7;
 }
 
+/* Bio */
+.bio-textarea {
+  padding: 0.8rem;
+  border-radius: 4px;
+  border: 1px solid #444;
+  background-color: #2d2d2d;
+  color: white;
+  font-size: 1rem;
+  resize: vertical;
+  min-height: 80px;
+}
+
+.bio-textarea:focus {
+  outline: none;
+  border-color: #315FC6;
+  box-shadow: 0 0 0 2px rgba(49, 95, 198, 0.3);
+}
+
+.bio-view {
+  background-color: #232323;
+  color: #eee;
+  padding: 0.8rem;
+  border-radius: 4px;
+  min-height: 80px;
+  font-size: 1rem;
+  border: 1px solid #444;
+}
+
+/* Ações de foto */
+.photo-actions {
+  display: flex;
+  gap: 1rem;
+  margin-top: 0.5rem;
+}
+
+.choose-photo-btn {
+  background-color: #315FC6;
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  font-weight: bold;
+  cursor: pointer;
+  border: none;
+  transition: background 0.2s;
+  display: inline-block;
+}
+
+.choose-photo-btn:hover {
+  background-color: #254a9e;
+}
+
+.remove-photo-btn {
+  background-color: #444;
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  font-weight: bold;
+  cursor: pointer;
+  border: none;
+  transition: background 0.2s;
+}
+
+.remove-photo-btn:hover {
+  background-color: #555;
+}
+
 /* Responsividade */
 @media (max-width: 768px) {
   .user-account-container {
