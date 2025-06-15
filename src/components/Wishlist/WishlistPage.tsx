@@ -4,27 +4,30 @@ import { Link } from 'react-router-dom';
 import './WishlistPage.css';
 
 interface Game {
-  id: number;
-  name: string;
-  background_image: string;
+  rawgId: number;
+  title: string;
+  backgroundImage: string;
 }
-
-const API_KEY = 'ac25b624a98d4348bc5c4a45abb34eed';
 
 const WishlistPage: React.FC = () => {
   const { wishlist, removeFromWishlist } = useWishlist();
   const [games, setGames] = useState<Game[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
 
+  const API_URL = import.meta.env.VITE_API_URL;
+
   useEffect(() => {
     const fetchGames = async () => {
       setLoading(true);
       const results: Game[] = [];
-      for (const id of wishlist) {
-        const res = await fetch(`https://api.rawg.io/api/games/${id}?key=${API_KEY}`);
+      for (const rawgId of wishlist) {
+        const res = await fetch(`${API_URL}/games/${rawgId}`);
         if (res.ok) {
           const data = await res.json();
-          results.push({ id: data.id, name: data.name, background_image: data.background_image });
+          results.push({
+            ...data,
+            backgroundImage: data.background_image,
+          });
         }
       }
       setGames(results);
@@ -32,7 +35,7 @@ const WishlistPage: React.FC = () => {
     };
     if (wishlist.length > 0) fetchGames();
     else setGames([]);
-  }, [wishlist]);
+  }, [wishlist, API_URL]);
 
   if (loading) return <div className="wishlist-empty">Loading your wishlist...</div>;
   if (games.length === 0) return <div className="wishlist-empty">Your wishlist is empty.</div>;
@@ -42,12 +45,12 @@ const WishlistPage: React.FC = () => {
       <h2 className='wishlist-title'>My Wishlist</h2>
       <div className="wishlist-list">
         {games.map(game => (
-          <div key={game.id} className="wishlist-item">
-            <Link to={`/game/${game.id}`}>
-              <img src={game.background_image} alt={game.name} className="wishlist-img" />
-              <div>{game.name}</div>
+          <div key={game.rawgId} className="wishlist-item">
+            <Link to={`/game/${game.rawgId}`}>
+              <img src={game.backgroundImage} alt={game.title} className="wishlist-img" />
+              <div>{game.title}</div>
             </Link>
-            <button onClick={() => removeFromWishlist(game.id)}>Remove</button>
+            <button onClick={() => removeFromWishlist(game.rawgId)}>Remove</button>
           </div>
         ))}
       </div>

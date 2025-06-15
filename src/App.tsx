@@ -48,7 +48,7 @@ function App() {
                       }
                     />
                     {/* Atualiza o page-content da página ao clicar em um Card */}
-                    <Route path="/game/:id" element={<GameDetails />} />
+                    <Route path="/game/:rawgId" element={<GameDetails />} />
                     <Route path="/login" element={<Login />} />
                     <Route path="/signup" element={<Register />} /> {/* Adicione esta linha */}
                     <Route

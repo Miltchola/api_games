@@ -17,16 +17,16 @@ const GameReviews: React.FC<GameReviewsProps> = ({ gameId }) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  const API_KEY = 'ac25b624a98d4348bc5c4a45abb34eed';
+  const API_URL = import.meta.env.VITE_API_URL;
 
   useEffect(() => {
     const fetchReviews = async () => {
       try {
         setLoading(true);
-        const response = await fetch(`https://api.rawg.io/api/games/${gameId}/reviews?key=${API_KEY}`);
+        const response = await fetch(`${API_URL}/games/${gameId}/reviews`);
         if (!response.ok) throw new Error('Failed to fetch reviews');
         const data = await response.json();
-        setReviews(data.results);
+        setReviews(Array.isArray(data) ? data : []);
       } catch (err) {
         setError(err instanceof Error ? err.message : 'Unknown error');
       } finally {
