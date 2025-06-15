@@ -43,16 +43,14 @@ const UserAccount: React.FC = () => {
           return;
         }
 
-        const response = await fetch(
-          `${API_URL}/users/${encodeURIComponent(username)}`,
-          {
-            method: 'GET',
-            headers: {
-              'Authorization': `Bearer ${token}`,
-              'Content-Type': 'application/json'
-            }
+        // Para buscar dados do usuário (no useEffect)
+        const response = await fetch(`${API_URL}/users/${encodeURIComponent(username)}`, {
+          method: 'GET',
+          headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
           }
-        );
+        });
 
         if (!response.ok) {
           const errorText = await response.text();
@@ -106,7 +104,12 @@ const UserAccount: React.FC = () => {
     }));
   };
 
-  const handleEdit = () => setIsEditing(true);
+  const handleEdit = () => {
+    setIsEditing(true);
+    setSuccess(null);
+    setError(null);
+  };
+
   const handleCancel = () => {
     setIsEditing(false);
     setSuccess(null);
@@ -123,6 +126,12 @@ const UserAccount: React.FC = () => {
     e.preventDefault();
     setError(null);
     setSuccess(null);
+    console.log("submit triggered");
+
+    if (!isEditing) {
+      console.warn("Ignorando envio porque não está em modo de edição");
+      return;
+    }
 
     try {
       setLoading(true);
@@ -132,8 +141,8 @@ const UserAccount: React.FC = () => {
         return;
       }
 
-      // Atualização de perfil (bio e foto)
-      const profileRes = await fetch(`${API_URL}/users/${encodeURIComponent(userData.username)}`, {
+      // Atualiza bio e profilePicture
+      const response = await fetch(`${API_URL}/users/${encodeURIComponent(userData.username)}/profile`, {
         method: 'PUT',
         headers: {
           'Authorization': `Bearer ${token}`,
@@ -145,34 +154,8 @@ const UserAccount: React.FC = () => {
         })
       });
 
-      if (!profileRes.ok) {
-        throw new Error(await profileRes.text());
-      }
-
-      // Atualização de senha, se preenchida
-      if (userData.currentPassword && userData.newPassword && userData.confirmPassword) {
-        if (userData.newPassword !== userData.confirmPassword) {
-          throw new Error('New password and confirmation do not match.');
-        }
-        if (userData.newPassword.length < 6) {
-          throw new Error('New password must be at least 6 characters.');
-        }
-
-        const passwordRes = await fetch(`${API_URL}/users/${encodeURIComponent(userData.username)}/password`, {
-          method: 'PUT',
-          headers: {
-            'Authorization': `Bearer ${token}`,
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({
-            currentPassword: userData.currentPassword,
-            newPassword: userData.newPassword
-          })
-        });
-
-        if (!passwordRes.ok) {
-          throw new Error(await passwordRes.text());
-        }
+      if (!response.ok) {
+        throw new Error(await response.text());
       }
 
       setSuccess('Profile updated successfully!');
@@ -312,7 +295,7 @@ const UserAccount: React.FC = () => {
         <div className="form-actions">
           {isEditing ? (
             <>
-              <button type="submit" disabled={loading}>
+              <button type="button" onClick={handleSubmit} disabled={loading}>
                 {loading ? 'Saving...' : 'Save'}
               </button>
               <button type="button" onClick={handleCancel} disabled={loading}>
