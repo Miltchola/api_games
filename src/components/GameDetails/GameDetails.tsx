@@ -9,16 +9,17 @@ import { useLibrary } from '../Library/LibraryContext';
 import { useAuth } from '../User/AuthContext';
 
 interface GameDetailsProps {
-  id: number;
-  name: string;
+  rawgId: number;
+  title: string;
   description: string;
-  background_image: string;
-  released: string;
+  backgroundImage: string;
+  releaseDate: string;
   rating: number;
+  ratingsCount?: number;
 }
 
 const GameDetails: React.FC = () => {
-  const { id } = useParams<{ id: string }>();
+  const { rawgId } = useParams<{ rawgId: string }>();
   const [game, setGame] = useState<GameDetailsProps | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -26,19 +27,26 @@ const GameDetails: React.FC = () => {
   const { library, addToLibrary, removeFromLibrary } = useLibrary();
   const { isAuthenticated } = useAuth();
 
-  const API_KEY = 'ac25b624a98d4348bc5c4a45abb34eed';
+  const API_URL = import.meta.env.VITE_API_URL;
 
-  const isInWishlist = game && wishlist.includes(Number(game.id));
-  const isInLibrary = game && library.includes(Number(game.id));
+  const isInWishlist = game && wishlist.includes(Number(game.rawgId));
+  const isInLibrary = game && library.includes(Number(game.rawgId));
 
   useEffect(() => {
     const fetchGameDetails = async () => {
       try {
         setLoading(true);
-        const response = await fetch(`https://api.rawg.io/api/games/${id}?key=${API_KEY}`);
+        const response = await fetch(`${API_URL}/games/${rawgId}`);
         if (!response.ok) throw new Error('Failed to fetch game details');
         const data = await response.json();
-        setGame(data);
+        console.log('Dados recebidos:', data);
+        setGame({
+          ...data,
+          backgroundImage: data.background_image,
+          ratingsCount: data.ratings_count,
+          releaseDate: data.releaseDate || data.release_date,
+          description: data.description || data.desc || '', // ajuste conforme o campo real
+        });
       } catch (err) {
         setError(err instanceof Error ? err.message : 'Unknown error');
       } finally {
@@ -47,7 +55,7 @@ const GameDetails: React.FC = () => {
     };
 
     fetchGameDetails();
-  }, [id]);
+  }, [rawgId]);
 
   if (loading) return <div>Loading game details...</div>;
   if (error) return <div>Error: {error}</div>;
@@ -56,7 +64,7 @@ const GameDetails: React.FC = () => {
   return (
     <div className="game-details">
       <div className="game-main">
-        <h1 className="game-title">{game.name}</h1>
+        <h1 className="game-title">{game.title}</h1>
         
         <div className="rating-container">
           <span className="rating-stars">
@@ -64,14 +72,12 @@ const GameDetails: React.FC = () => {
             {'☆'.repeat(5 - Math.round(game.rating))}
           </span>
           <span className="rating-value">{game.rating.toFixed(1)}/5</span>
- {/* <p className="game-release">Released: {game.released}</p> */}
-
         </div>
 
         <img 
           className="game-image" 
-          src={game.background_image} 
-          alt={game.name} 
+          src={game.backgroundImage} 
+          alt={game.title} 
         />
 
         <div className="game-buttons">
@@ -84,8 +90,8 @@ const GameDetails: React.FC = () => {
               }
               if (game) {
                 isInLibrary
-                  ? removeFromLibrary(Number(game.id))
-                  : addToLibrary(Number(game.id));
+                  ? removeFromLibrary(Number(game.rawgId))
+                  : addToLibrary(Number(game.rawgId));
               }
             }}
             disabled={!isAuthenticated}
@@ -107,7 +113,7 @@ const GameDetails: React.FC = () => {
                 return;
               }
               if (game) {
-                isInWishlist ? removeFromWishlist(Number(game.id)) : addToWishlist(Number(game.id));
+                isInWishlist ? removeFromWishlist(Number(game.rawgId)) : addToWishlist(Number(game.rawgId));
               }
             }}
             disabled={!isAuthenticated}
@@ -122,21 +128,17 @@ const GameDetails: React.FC = () => {
           </button>
         </div>
 
-<div className="game-info">
+        <div className="game-info">
           <h3 className="info-title">About the Game</h3>
           <p className="game-description">
             {game.description.replace(/<[^>]*>/g, '')}
-
-            
           </p>
-
-          
-          <h3 className="info-title">Release Date: {game.released}</h3>
+          <h3 className="info-title">Release Date: {game.releaseDate ? new Date(game.releaseDate).toLocaleDateString() : 'Unknown'}</h3>
         </div>
       </div>
 
       <div className="game-reviews">
-        <GameReviews gameId={id!} />
+        <GameReviews gameId={rawgId!} />
       </div>
     </div>
   );
