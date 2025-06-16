@@ -84,7 +84,7 @@ const GameCard: React.FC<GameCardProps> = ({
                 <h3 className="card-title">{title}</h3>
                 {subtitle && <h4 className="card-subtitle">{subtitle}</h4>}
                 {releaseInfo && <p className="release-info">{releaseInfo}</p>}
-                {rating && (
+                {typeof rating === 'number' && (
                     <div className="rating-container">
                         <span className="rating-stars">
                             {'★'.repeat(Math.round(rating))}
