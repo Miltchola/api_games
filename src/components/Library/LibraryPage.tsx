@@ -52,6 +52,17 @@ const LibraryPage: React.FC = () => {
               <div>{game.title}</div>
             </Link>
             <button onClick={() => removeFromLibrary(game.rawgId)}>Remove</button>
+            <div>
+             <select
+             value={game.status}
+             onChange={e => setGameStatus(game.id, e.target.value as any)}
+              style={{ marginBottom: 8, borderRadius: 6, padding: '6px 10px' }}
+              >
+              <option value="Jogando">Jogando</option>
+              <option value="Zerado">Zerado</option>
+              <option value="Quero Jogar">Quero Jogar</option>
+              </select>
+            </div>
           </div>
         ))}
       </div>

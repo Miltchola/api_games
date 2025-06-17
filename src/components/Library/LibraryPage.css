@@ -86,6 +86,16 @@
     transform: scale(1.05);
 }
 
+.wishlist-item select {
+    margin-bottom: 8px;
+    border-radius: 6px;
+    padding: 6px 10px;
+    font-size: 1rem;
+    background: #222;
+    color: #fff;
+    border: 1px solid #315FC6;
+}
+
 .wishlist-empty {
     color: #bbb;
     font-size: 1.2rem;
