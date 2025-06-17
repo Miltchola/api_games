@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './UserAccount.css';
-import placeholderImg from '../../../public/placeholder-user-photo.jpg';
 
 const API_URL = import.meta.env.VITE_API_URL;
 
@@ -15,7 +14,7 @@ interface UserData {
   profilePicture: string;
 }
 
-//const placeholderImg = 'https://via.placeholder.com/150?text=Profile';
+const placeholderImg = 'https://via.placeholder.com/150?text=Profile';
 
 const UserAccount: React.FC = () => {
   const [userData, setUserData] = useState<UserData>({
