@@ -30,7 +30,7 @@ const GameDetails: React.FC = () => {
   const API_URL = import.meta.env.VITE_API_URL;
 
   const isInWishlist = game && wishlist.includes(Number(game.rawgId));
-  const isInLibrary = game && library.includes(Number(game.rawgId));
+  const isInLibrary = game && library.some(item => item.gameId === Number(game.rawgId));
 
   useEffect(() => {
     const fetchGameDetails = async () => {

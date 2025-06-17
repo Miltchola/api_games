@@ -86,6 +86,31 @@
     transform: scale(1.05);
 }
 
+.wishlist-status-select {
+    margin-bottom: 12px;
+    border-radius: 6px;
+    padding: 8px 14px;
+    font-size: 1rem;
+    background: #232a3a;
+    color: #fff;
+    border: 1px solid #315FC6;
+    outline: none;
+    transition: border 0.2s, box-shadow 0.2s;
+    box-shadow: 0 1px 4px rgba(49,95,198,0.05);
+    width: 90%;
+    cursor: pointer;
+}
+
+.wishlist-status-select:focus {
+    border: 1.5px solid #fff;
+    box-shadow: 0 0 0 2px #315FC6;
+}
+
+.wishlist-status-select option {
+    background: #232a3a;
+    color: #fff;
+}
+
 .wishlist-empty {
     color: #bbb;
     font-size: 1.2rem;
