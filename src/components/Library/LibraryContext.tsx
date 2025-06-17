@@ -1,9 +1,17 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 
+type GameStatus = 'Jogando' | 'Zerado' | 'Quero Jogar';
+
+interface LibraryGame {
+  gameId: number;
+  status: GameStatus;
+}
+
 interface LibraryContextType {
-  library: number[];
-  addToLibrary: (gameId: number) => Promise<void>;
+  library: LibraryGame[];
+  addToLibrary: (gameId: number, status?: GameStatus) => Promise<void>;
   removeFromLibrary: (gameId: number) => Promise<void>;
+  updateStatus: (gameId: number, status: GameStatus) => Promise<void>;
   refreshLibrary: () => Promise<void>;
 }
 
@@ -13,12 +21,11 @@ export const LibraryProvider: React.FC<{ children: ReactNode }> = ({ children })
   const [username, setUsername] = useState<string | null>(() => localStorage.getItem('username'));
   const libraryKey = username ? `library_${username}` : 'library_guest';
 
-  const [library, setLibrary] = useState<number[]>(() => {
+  const [library, setLibrary] = useState<LibraryGame[]>(() => {
     const stored = localStorage.getItem(libraryKey);
     return stored ? JSON.parse(stored) : [];
   });
 
-  // Atualiza username e library quando username mudar no localStorage
   useEffect(() => {
     const handleStorage = () => {
       const newUsername = localStorage.getItem('username');
@@ -42,9 +49,10 @@ export const LibraryProvider: React.FC<{ children: ReactNode }> = ({ children })
     };
   }, [username]);
 
-  const addToLibrary = async (gameId: number): Promise<void> => {
+  const addToLibrary = async (gameId: number, status: GameStatus = 'Quero Jogar'): Promise<void> => {
     setLibrary(prev => {
-      const updated = prev.includes(gameId) ? prev : [...prev, gameId];
+      if (prev.some(g => g.gameId === gameId)) return prev;
+      const updated = [...prev, { gameId, status }];
       localStorage.setItem(libraryKey, JSON.stringify(updated));
       return updated;
     });
@@ -52,7 +60,15 @@ export const LibraryProvider: React.FC<{ children: ReactNode }> = ({ children })
 
   const removeFromLibrary = async (gameId: number): Promise<void> => {
     setLibrary(prev => {
-      const updated = prev.filter(id => id !== gameId);
+      const updated = prev.filter(g => g.gameId !== gameId);
+      localStorage.setItem(libraryKey, JSON.stringify(updated));
+      return updated;
+    });
+  };
+
+  const updateStatus = async (gameId: number, status: GameStatus): Promise<void> => {
+    setLibrary(prev => {
+      const updated = prev.map(g => g.gameId === gameId ? { ...g, status } : g);
       localStorage.setItem(libraryKey, JSON.stringify(updated));
       return updated;
     });
@@ -64,7 +80,7 @@ export const LibraryProvider: React.FC<{ children: ReactNode }> = ({ children })
   };
 
   return (
-    <LibraryContext.Provider value={{ library, addToLibrary, removeFromLibrary, refreshLibrary }}>
+    <LibraryContext.Provider value={{ library, addToLibrary, removeFromLibrary, updateStatus, refreshLibrary }}>
       {children}
     </LibraryContext.Provider>
   );

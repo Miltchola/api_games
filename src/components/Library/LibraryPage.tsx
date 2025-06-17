@@ -9,8 +9,12 @@ interface Game {
   backgroundImage: string;
 }
 
+type GameStatus = 'Jogando' | 'Zerado' | 'Quero Jogar';
+
+const statusOptions: GameStatus[] = ['Jogando', 'Zerado', 'Quero Jogar'];
+
 const LibraryPage: React.FC = () => {
-  const { library, removeFromLibrary } = useLibrary();
+  const { library, removeFromLibrary, updateStatus } = useLibrary();
   const [games, setGames] = useState<Game[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
 
@@ -20,8 +24,8 @@ const LibraryPage: React.FC = () => {
     const fetchGames = async () => {
       setLoading(true);
       const results: Game[] = [];
-      for (const rawgId of library) {
-        const res = await fetch(`${API_URL}/games/${rawgId}`);
+      for (const item of library) {
+        const res = await fetch(`${API_URL}/games/${item.gameId}`);
         if (res.ok) {
           const data = await res.json();
           results.push({
@@ -45,15 +49,27 @@ const LibraryPage: React.FC = () => {
     <div className="wishlist-page">
       <h2 className='wishlist-title'>My Library</h2>
       <div className="wishlist-list">
-        {games.map(game => (
-          <div key={game.rawgId} className="wishlist-item">
-            <Link to={`/game/${game.rawgId}`}>
-              <img src={game.backgroundImage} alt={game.title} className="wishlist-img" />
-              <div>{game.title}</div>
-            </Link>
-            <button onClick={() => removeFromLibrary(game.rawgId)}>Remove</button>
-          </div>
-        ))}
+        {games.map(game => {
+          const libItem = library.find(g => g.gameId === game.rawgId);
+          return (
+            <div key={game.rawgId} className="wishlist-item">
+              <Link to={`/game/${game.rawgId}`}>
+                <img src={game.backgroundImage} alt={game.title} className="wishlist-img" />
+                <div>{game.title}</div>
+              </Link>
+              <select
+              className="wishlist-status-select"
+                value={libItem?.status || 'Quero Jogar'}
+                onChange={e => updateStatus(game.rawgId, e.target.value as GameStatus)}
+              >
+                {statusOptions.map(status => (
+                <option key={status} value={status}>{status}</option>
+                ))}
+              </select>
+              <button onClick={() => removeFromLibrary(game.rawgId)}>Remove</button>
+            </div>
+          );
+        })}
       </div>
     </div>
   );
