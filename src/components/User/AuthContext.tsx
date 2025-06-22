@@ -15,7 +15,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const login = () => {
     setIsAuthenticated(true);
-    localStorage.setItem('token', 'fake-token'); // Substitua pelo token real
+    // localStorage.setItem('token', 'fake-token');
   };
 
   const logout = () => {
