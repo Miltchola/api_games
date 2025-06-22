@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './UserAccount.css';
-import placeholderImg from '../../../public/placeholder-user-photo.jpg';
+import placeholderImg from '../../assets/placeholder-user-photo.jpg';
 
 const API_URL = import.meta.env.VITE_API_URL;
 
