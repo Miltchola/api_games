@@ -2,64 +2,75 @@ import React, { createContext, useContext, useState, useEffect, ReactNode } from
 
 interface WishlistContextType {
   wishlist: number[];
-  addToWishlist: (gameId: number) => void;
-  removeFromWishlist: (gameId: number) => void;
+  addToWishlist: (gameId: number) => Promise<void>;
+  removeFromWishlist: (gameId: number) => Promise<void>;
+  refreshWishlist: () => Promise<void>;
 }
 
 const WishlistContext = createContext<WishlistContextType | undefined>(undefined);
 
+const API_URL = import.meta.env.VITE_API_URL;
+
 export const WishlistProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-  const [username, setUsername] = useState<string | null>(() => localStorage.getItem('username'));
-  const wishlistKey = username ? `wishlist_${username}` : 'wishlist_guest';
+  const [wishlist, setWishlist] = useState<number[]>([]);
 
-  const [wishlist, setWishlist] = useState<number[]>(() => {
-    const stored = localStorage.getItem(wishlistKey);
-    return stored ? JSON.parse(stored) : [];
-  });
-
-  // Atualiza username e wishlist quando username mudar no localStorage
-  useEffect(() => {
-    const handleStorage = () => {
-      const newUsername = localStorage.getItem('username');
-      setUsername(newUsername);
-      const newKey = newUsername ? `wishlist_${newUsername}` : 'wishlist_guest';
-      const stored = localStorage.getItem(newKey);
-      setWishlist(stored ? JSON.parse(stored) : []);
-    };
-
-    window.addEventListener('storage', handleStorage);
-    // Também verifica mudanças locais (login/logout no mesmo tab)
-    const interval = setInterval(() => {
-      const newUsername = localStorage.getItem('username');
-      if (newUsername !== username) {
-        handleStorage();
-      }
-    }, 500);
-
-    return () => {
-      window.removeEventListener('storage', handleStorage);
-      clearInterval(interval);
-    };
-  }, [username]);
-
-  const addToWishlist = (gameId: number) => {
-    setWishlist(prev => {
-      const updated = prev.includes(gameId) ? prev : [...prev, gameId];
-      localStorage.setItem(wishlistKey, JSON.stringify(updated));
-      return updated;
+  // Busca a wishlist do usuário ao carregar
+  const fetchWishlist = async () => {
+    const token = localStorage.getItem('token');
+    if (!token) return;
+    const res = await fetch(`${API_URL}/wishlist`, {
+      headers: { Authorization: `Bearer ${token}` }
     });
+    if (res.ok) {
+      const data = await res.json();
+      // Suporte tanto para array quanto para objeto com .games
+      const games = Array.isArray(data) ? data : (data.games || []);
+      setWishlist(games);
+    }
   };
 
-  const removeFromWishlist = (gameId: number) => {
-    setWishlist(prev => {
-      const updated = prev.filter(id => id !== gameId);
-      localStorage.setItem(wishlistKey, JSON.stringify(updated));
-      return updated;
+  useEffect(() => {
+    fetchWishlist();
+  }, []);
+
+  const addToWishlist = async (gameId: number): Promise<void> => {
+    const token = localStorage.getItem('token');
+    if (!token) return;
+    const res = await fetch(`${API_URL}/wishlist/add`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`
+      },
+      body: JSON.stringify({ rawgId: gameId })
     });
+    if (res.ok) {
+      setWishlist(prev => prev.includes(gameId) ? prev : [...prev, gameId]);
+    }
+  };
+
+  const removeFromWishlist = async (gameId: number): Promise<void> => {
+    const token = localStorage.getItem('token');
+    if (!token) return;
+    const res = await fetch(`${API_URL}/wishlist/remove`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`
+      },
+      body: JSON.stringify({ rawgId: gameId })
+    });
+    if (res.ok) {
+      setWishlist(prev => prev.filter(id => id !== gameId));
+    }
+  };
+
+  const refreshWishlist = async (): Promise<void> => {
+    await fetchWishlist();
   };
 
   return (
-    <WishlistContext.Provider value={{ wishlist, addToWishlist, removeFromWishlist }}>
+    <WishlistContext.Provider value={{ wishlist, addToWishlist, removeFromWishlist, refreshWishlist }}>
       {children}
     </WishlistContext.Provider>
   );

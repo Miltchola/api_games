@@ -17,66 +17,73 @@ interface LibraryContextType {
 
 const LibraryContext = createContext<LibraryContextType | undefined>(undefined);
 
-export const LibraryProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-  const [username, setUsername] = useState<string | null>(() => localStorage.getItem('username'));
-  const libraryKey = username ? `library_${username}` : 'library_guest';
+const API_URL = import.meta.env.VITE_API_URL;
 
-  const [library, setLibrary] = useState<LibraryGame[]>(() => {
-    const stored = localStorage.getItem(libraryKey);
-    return stored ? JSON.parse(stored) : [];
-  });
+export const LibraryProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
+  const [library, setLibrary] = useState<LibraryGame[]>([]);
+
+  // Busca a biblioteca do usuário ao carregar
+  const fetchLibrary = async () => {
+    const token = localStorage.getItem('token');
+    if (!token) return;
+    const res = await fetch(`${API_URL}/library`, {
+      headers: { Authorization: `Bearer ${token}` }
+    });
+    if (res.ok) {
+      const data = await res.json();
+      // Se data for array, use diretamente. Se for objeto, use data.games.
+      const games = Array.isArray(data) ? data : (data.games || []);
+      console.log('Resposta do backend:', data);
+      setLibrary(games.map((gameId: number) => ({
+        gameId,
+        status: 'Quero Jogar'
+      })));
+    }
+  };
 
   useEffect(() => {
-    const handleStorage = () => {
-      const newUsername = localStorage.getItem('username');
-      setUsername(newUsername);
-      const newKey = newUsername ? `library_${newUsername}` : 'library_guest';
-      const stored = localStorage.getItem(newKey);
-      setLibrary(stored ? JSON.parse(stored) : []);
-    };
-
-    window.addEventListener('storage', handleStorage);
-    const interval = setInterval(() => {
-      const newUsername = localStorage.getItem('username');
-      if (newUsername !== username) {
-        handleStorage();
-      }
-    }, 500);
-
-    return () => {
-      window.removeEventListener('storage', handleStorage);
-      clearInterval(interval);
-    };
-  }, [username]);
+    fetchLibrary();
+  }, []);
 
   const addToLibrary = async (gameId: number, status: GameStatus = 'Quero Jogar'): Promise<void> => {
-    setLibrary(prev => {
-      if (prev.some(g => g.gameId === gameId)) return prev;
-      const updated = [...prev, { gameId, status }];
-      localStorage.setItem(libraryKey, JSON.stringify(updated));
-      return updated;
+    const token = localStorage.getItem('token');
+    if (!token) return;
+    const res = await fetch(`${API_URL}/library/add`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`
+      },
+      body: JSON.stringify({ rawgId: gameId })
     });
+    if (res.ok) {
+      setLibrary(prev => [...prev, { gameId, status }]);
+    }
   };
 
   const removeFromLibrary = async (gameId: number): Promise<void> => {
-    setLibrary(prev => {
-      const updated = prev.filter(g => g.gameId !== gameId);
-      localStorage.setItem(libraryKey, JSON.stringify(updated));
-      return updated;
+    const token = localStorage.getItem('token');
+    if (!token) return;
+    const res = await fetch(`${API_URL}/library/remove`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`
+      },
+      body: JSON.stringify({ rawgId: gameId })
     });
+    if (res.ok) {
+      setLibrary(prev => prev.filter(g => g.gameId !== gameId));
+    }
   };
 
   const updateStatus = async (gameId: number, status: GameStatus): Promise<void> => {
-    setLibrary(prev => {
-      const updated = prev.map(g => g.gameId === gameId ? { ...g, status } : g);
-      localStorage.setItem(libraryKey, JSON.stringify(updated));
-      return updated;
-    });
+    // Se quiser salvar o status no backend, crie um endpoint para isso.
+    setLibrary(prev => prev.map(g => g.gameId === gameId ? { ...g, status } : g));
   };
 
   const refreshLibrary = async (): Promise<void> => {
-    const stored = localStorage.getItem(libraryKey);
-    setLibrary(stored ? JSON.parse(stored) : []);
+    await fetchLibrary();
   };
 
   return (
