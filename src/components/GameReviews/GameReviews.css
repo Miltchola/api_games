@@ -54,3 +54,59 @@
     text-align: center;
     margin-top: 20px;
 }
+
+.review-form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    background: #333333;
+    border: 1px solid #fff;
+    border-radius: 8px;
+    padding: 16px;
+    margin-bottom: 24px;
+    transition: all 0.5s ease;
+}
+.review-form:hover {
+    transform: scale(1.02);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+.review-input {
+    width: 100%;
+    min-height: 60px;
+    padding: 10px;
+    border-radius: 6px;
+    border: 1.5px solid #444;
+    background: #222222;
+    color: #f0f0f0;
+    font-size: 15px;
+    resize: vertical;
+    transition: border 0.2s;
+}
+
+.review-input:focus {
+    border-color: #315fc6;
+    outline: none;
+}
+
+.review-form button[type="submit"] {
+    align-self: flex-end;
+    background: #315fc6;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 8px 18px;
+    font-weight: bold;
+    font-size: 15px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.review-form button[type="submit"]:hover:not(:disabled) {
+    transform: scale(1.05);
+}
+
+.review-form button[type="submit"]:disabled {
+    background: #888;
+    cursor: not-allowed;
+}
