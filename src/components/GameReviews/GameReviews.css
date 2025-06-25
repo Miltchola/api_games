@@ -21,6 +21,7 @@
     border-radius: 5px;
     background-color: #333333; /* Darker card background */
     transition: all 0.3s ease-in-out;
+    position: relative; /* Added for delete button positioning */
 }
 
 .review-card:hover {
@@ -109,4 +110,21 @@
 .review-form button[type="submit"]:disabled {
     background: #888;
     cursor: not-allowed;
+}
+
+.delete-review-btn {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: transparent;
+  border: none;
+  color: #ff5555;
+  font-weight: bold;
+  font-size: 18px;
+  cursor: pointer;
+  z-index: 2;
+  transition: color 0.2s;
+}
+.delete-review-btn:hover {
+  color: #ff2222;
 }
