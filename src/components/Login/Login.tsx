@@ -50,8 +50,10 @@ const Login: React.FC = () => {
       const data = await response.json();
       // Salve o token JWT
       localStorage.setItem('token', data.token);
-      console.log('Token JWT: ', data.token);
-      localStorage.setItem('username', formData.username); // Salve o username
+      // Salve o username e o userId
+      localStorage.setItem('username', data.username || formData.username);
+      localStorage.setItem('userId', data.userId || data._id);
+
       login(); // Atualiza o contexto de autenticação
 
       // Redirecione para a tela de conta do usuário
