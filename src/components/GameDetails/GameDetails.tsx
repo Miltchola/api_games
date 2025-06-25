@@ -17,6 +17,7 @@ interface GameDetailsProps {
   releaseDate: string;
   rating: number;
   ratingsCount?: number;
+  genres?: { name: string }[];
 }
 
 const GameDetails: React.FC = () => {
@@ -52,6 +53,7 @@ const GameDetails: React.FC = () => {
           ratingsCount: data.ratings_count,
           releaseDate: data.releaseDate || data.release_date,
           description: data.description || data.desc || '', // ajuste conforme o campo real
+          genres: data.genres || [],
         });
         setMongoGameId(data._id);
       } catch (err) {
@@ -283,6 +285,14 @@ const GameDetails: React.FC = () => {
             {game.description.replace(/<[^>]*>/g, '')}
           </p>
           <h3 className="info-title">Release Date: {game.releaseDate ? new Date(game.releaseDate).toLocaleDateString() : 'Unknown'}</h3>
+          {game.genres && game.genres.length > 0 && (
+            <div style={{ marginTop: '16px' }}>
+              <h3 className="info-title" style={{ fontSize: 22, marginTop: 0, marginBottom: 8 }}>Genres:</h3>
+              <p style={{ fontSize: 16 }}>
+                {game.genres.map((g) => g.name).join(', ')}
+              </p>
+            </div>
+          )}        
         </div>
       </div>
 
