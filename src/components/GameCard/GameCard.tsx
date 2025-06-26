@@ -85,7 +85,7 @@ const GameCard: React.FC<GameCardProps> = ({
             <div className="card-content">
                 <h3 className="card-title">{title}</h3>
                 {subtitle && <h4 className="card-subtitle">{subtitle}</h4>}
-                {genres && <p className="card-genres">{genres}</p>}
+                {/*genres && <p className="card-genres">{genres}</p>*/}
                 {releaseInfo && <p className="release-info">{releaseInfo}</p>}
                 {typeof rating === 'number' && (
                     <div className="rating-container">
