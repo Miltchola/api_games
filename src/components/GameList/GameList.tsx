@@ -97,6 +97,7 @@ const GameList: React.FC<GameListProps> = ({ sortBy, searchQuery }) => {
               : 'Data desconhecida'
           }
           rating={game.rating ?? 0}
+          genres={game.genres}
         />
       ))}
     </div>

@@ -53,7 +53,17 @@ const GameDetails: React.FC = () => {
           ratingsCount: data.ratings_count,
           releaseDate: data.releaseDate || data.release_date,
           description: data.description || data.desc || '', // ajuste conforme o campo real
-          genres: data.genres || [],
+          genres: Array.isArray(data.genres)
+            ? data.genres.map((g: any) =>
+                typeof g === 'string'
+                  ? { name: g }
+                  : g.name
+                  ? { name: g.name }
+                  : { name: String(g) }
+              )
+            : typeof data.genres === 'string'
+            ? data.genres.split(',').map((g: string) => ({ name: g.trim() }))
+            : [],
         });
         setMongoGameId(data._id);
       } catch (err) {
