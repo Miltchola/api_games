@@ -26,7 +26,7 @@ const Header = ({ toggleSidebar, setSearchQuery }: { toggleSidebar: () => void; 
             <input
               className="search"
               type="text"
-              placeholder="Search for Games"
+              placeholder="Search for Games or Genres"
               onChange={(e) => setSearchQuery(e.target.value)} // Update search query
             />
           </div>

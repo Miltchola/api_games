@@ -8,6 +8,7 @@ interface Game {
   backgroundImage?: string;
   rating?: number;
   ratingsCount?: number;
+  genres?: string;
   // Adicione outros campos conforme necessário
 }
 
@@ -42,6 +43,11 @@ const GameList: React.FC<GameListProps> = ({ sortBy, searchQuery }) => {
                 backgroundImage: game.background_image,
                 ratingsCount: game.ratings_count,
                 rating: typeof game.rating === 'string' ? Number(game.rating) : game.rating,
+                genres: typeof game.genres === 'string'
+                  ? game.genres
+                  : Array.isArray(game.genres)
+                    ? game.genres.map((g: any) => g.name || g).join(', ')
+                    : '',
              }))
         : []
       );
@@ -65,9 +71,12 @@ const GameList: React.FC<GameListProps> = ({ sortBy, searchQuery }) => {
   };
 
   // Filtra os jogos pelo título
-  const filteredGames = games.filter((game) =>
-    game.title.toLowerCase().includes(searchQuery.toLowerCase())
-  );
+  const filteredGames = games.filter((game) => {
+    const query = searchQuery.toLowerCase();
+    const titleMatch = game.title.toLowerCase().includes(query);
+    const genreMatch = game.genres?.toLowerCase().includes(query);
+    return titleMatch || genreMatch;
+  });
 
   if (loading) return <div className="loading">Loading games...</div>;
   if (error) return <div className="error">Error: {error}</div>;
@@ -88,6 +97,7 @@ const GameList: React.FC<GameListProps> = ({ sortBy, searchQuery }) => {
               : 'Data desconhecida'
           }
           rating={game.rating ?? 0}
+          genres={game.genres}
         />
       ))}
     </div>

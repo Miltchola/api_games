@@ -7,6 +7,7 @@ import GameReviews from '../GameReviews/GameReviews';
 import { useWishlist } from '../Wishlist/WishlistContext';
 import { useLibrary } from '../Library/LibraryContext';
 import { useAuth } from '../User/AuthContext';
+import RatingStars from './RatingStars';
 
 interface GameDetailsProps {
   rawgId: number;
@@ -16,6 +17,7 @@ interface GameDetailsProps {
   releaseDate: string;
   rating: number;
   ratingsCount?: number;
+  genres?: { name: string }[];
 }
 
 const GameDetails: React.FC = () => {
@@ -25,7 +27,12 @@ const GameDetails: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
   const { wishlist, addToWishlist, removeFromWishlist } = useWishlist();
   const { library, addToLibrary, removeFromLibrary } = useLibrary();
-  const { isAuthenticated } = useAuth();
+  const { isAuthenticated, getToken } = useAuth();
+  const [userRating, setUserRating] = useState<number | null>(null);
+  const [averageRating, setAverageRating] = useState<number | null>(null);
+  const [ratingLoading, setRatingLoading] = useState(false);
+  const [ratingError, setRatingError] = useState<string | null>(null);
+  const [mongoGameId, setMongoGameId] = useState<string | null>(null);
 
   const API_URL = import.meta.env.VITE_API_URL;
 
@@ -46,7 +53,19 @@ const GameDetails: React.FC = () => {
           ratingsCount: data.ratings_count,
           releaseDate: data.releaseDate || data.release_date,
           description: data.description || data.desc || '', // ajuste conforme o campo real
+          genres: Array.isArray(data.genres)
+            ? data.genres.map((g: any) =>
+                typeof g === 'string'
+                  ? { name: g }
+                  : g.name
+                  ? { name: g.name }
+                  : { name: String(g) }
+              )
+            : typeof data.genres === 'string'
+            ? data.genres.split(',').map((g: string) => ({ name: g.trim() }))
+            : [],
         });
+        setMongoGameId(data._id);
       } catch (err) {
         setError(err instanceof Error ? err.message : 'Unknown error');
       } finally {
@@ -54,8 +73,126 @@ const GameDetails: React.FC = () => {
       }
     };
 
+    const fetchRatings = async () => {
+      if (!mongoGameId) return;
+      try {
+        const avgRes = await fetch(`${API_URL}/ratings/game/${mongoGameId}/average`);
+        if (avgRes.ok) {
+          const avgData = await avgRes.json();
+          setAverageRating(avgData.average ?? null);
+        }
+        if (isAuthenticated) {
+          const userRes = await fetch(`${API_URL}/ratings/game/${mongoGameId}/user`, {
+            headers: { Authorization: `Bearer ${getToken?.()}` },
+          });
+          if (userRes.ok) {
+            const userData = await userRes.json();
+            setUserRating(userData.rating ?? null);
+          }
+        } else {
+          setUserRating(null);
+        }
+      } catch (err) {
+        setRatingError('Erro ao buscar ratings');
+      }
+    };
+
     fetchGameDetails();
-  }, [rawgId]);
+    fetchRatings();
+  }, [rawgId, isAuthenticated]);
+
+  useEffect(() => {
+    if (mongoGameId) {
+      const fetchRatings = async () => {
+        try {
+          const avgRes = await fetch(`${API_URL}/ratings/game/${mongoGameId}/average`);
+          if (avgRes.ok) {
+            const avgData = await avgRes.json();
+            setAverageRating(avgData.average ?? null);
+          }
+          if (isAuthenticated) {
+            const userRes = await fetch(`${API_URL}/ratings/game/${mongoGameId}/user`, {
+              headers: { Authorization: `Bearer ${getToken?.()}` },
+            });
+            if (userRes.ok) {
+              const userData = await userRes.json();
+              setUserRating(userData.rating ?? null);
+            }
+          } else {
+            setUserRating(null);
+          }
+        } catch (err) {
+          setRatingError('Erro ao buscar ratings');
+        }
+      };
+      fetchRatings();
+    }
+  }, [mongoGameId, isAuthenticated]);
+
+  const handleRate = async (rating: number) => {
+    if (!isAuthenticated || !mongoGameId) {
+      alert('Você precisa estar logado para avaliar.');
+      return;
+    }
+    setRatingLoading(true);
+    setRatingError(null);
+    try {
+      const method = userRating ? 'PUT' : 'POST';
+      const res = await fetch(`${API_URL}/ratings`, {
+        method,
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${getToken?.()}`,
+        },
+        body: JSON.stringify({
+          gameId: mongoGameId,
+          rating,
+        }),
+      });
+      if (!res.ok) throw new Error('Erro ao salvar avaliação');
+      setUserRating(rating);
+      // Atualiza média
+      const avgRes = await fetch(`${API_URL}/ratings/game/${mongoGameId}/average`);
+      if (avgRes.ok) {
+        const avgData = await avgRes.json();
+        setAverageRating(avgData.average ?? null);
+      }
+    } catch (err) {
+      setRatingError('Erro ao salvar avaliação');
+    } finally {
+      setRatingLoading(false);
+    }
+  };
+
+  const handleRemoveRating = async () => {
+    if (!isAuthenticated || !mongoGameId) return;
+    setRatingLoading(true);
+    setRatingError(null);
+    try {
+      const res = await fetch(`${API_URL}/ratings`, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${getToken?.()}`,
+        },
+        body: JSON.stringify({
+          gameId: mongoGameId,
+        }),
+      });
+      if (!res.ok) throw new Error('Erro ao remover avaliação');
+      setUserRating(null);
+      // Atualiza média
+      const avgRes = await fetch(`${API_URL}/ratings/game/${mongoGameId}/average`);
+      if (avgRes.ok) {
+        const avgData = await avgRes.json();
+        setAverageRating(avgData.average ?? null);
+      }
+    } catch (err) {
+      setRatingError('Erro ao remover avaliação');
+    } finally {
+      setRatingLoading(false);
+    }
+  };
 
   if (loading) return <div>Loading game details...</div>;
   if (error) return <div>Error: {error}</div>;
@@ -67,11 +204,35 @@ const GameDetails: React.FC = () => {
         <h1 className="game-title">{game.title}</h1>
         
         <div className="rating-container">
+          <span className="rating-label">Média Geral:</span>
           <span className="rating-stars">
-            {'★'.repeat(Math.round(game.rating))}
-            {'☆'.repeat(5 - Math.round(game.rating))}
+            <RatingStars rating={game.rating} />
           </span>
           <span className="rating-value">{game.rating.toFixed(1)}/5</span>
+        </div>
+
+        <div className="rating-container">
+          <span className="rating-label">Média dos usuários:</span>
+          <span className="rating-stars">
+            <RatingStars rating={averageRating ?? 0} />
+          </span>
+          <span className="rating-value">{(averageRating ?? 0).toFixed(1)}/5</span>
+        </div>
+
+        <div className="user-rating-container">
+          <span className="rating-label">Sua avaliação:</span>
+          <RatingStars
+            rating={userRating ?? 0}
+            onRate={handleRate}
+            editable={isAuthenticated}
+          />
+          {userRating && (
+            <button onClick={handleRemoveRating} disabled={ratingLoading} style={{ marginLeft: 8 }}>
+              Remover avaliação
+            </button>
+          )}
+          {ratingLoading && <span>Salvando...</span>}
+          {ratingError && <span style={{ color: 'red' }}>{ratingError}</span>}
         </div>
 
         <img 
@@ -134,6 +295,14 @@ const GameDetails: React.FC = () => {
             {game.description.replace(/<[^>]*>/g, '')}
           </p>
           <h3 className="info-title">Release Date: {game.releaseDate ? new Date(game.releaseDate).toLocaleDateString() : 'Unknown'}</h3>
+          {game.genres && game.genres.length > 0 && (
+            <div style={{ marginTop: '16px' }}>
+              <h3 className="info-title" style={{ fontSize: 22, marginTop: 0, marginBottom: 8 }}>Genres:</h3>
+              <p style={{ fontSize: 16 }}>
+                {game.genres.map((g) => g.name).join(', ')}
+              </p>
+            </div>
+          )}        
         </div>
       </div>
 

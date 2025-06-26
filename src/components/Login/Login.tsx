@@ -44,19 +44,22 @@ const Login: React.FC = () => {
       });
 
       if (!response.ok) {
-        throw new Error('Credenciais inválidas');
+        throw new Error('Invalid Credentials');
       }
 
       const data = await response.json();
       // Salve o token JWT
       localStorage.setItem('token', data.token);
-      localStorage.setItem('username', formData.username); // Salve o username
+      // Salve o username e o userId
+      localStorage.setItem('username', data.username || formData.username);
+      localStorage.setItem('userId', data.userId || data._id);
+
       login(); // Atualiza o contexto de autenticação
 
       // Redirecione para a tela de conta do usuário
       navigate('/account');
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Ocorreu um erro ao fazer login');
+      setError(err instanceof Error ? err.message : 'An error occurred while logging in');
     } finally {
       setLoading(false);
     }
