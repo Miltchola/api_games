@@ -10,6 +10,7 @@ interface GameCardProps {
     releaseInfo?: string;
     rating?: number;
     id: string; // Add id prop
+    genres?: string;
 }
 
 const GameCard: React.FC<GameCardProps> = ({ 
@@ -19,7 +20,8 @@ const GameCard: React.FC<GameCardProps> = ({
     isTrending = false,
     releaseInfo,
     rating,
-    id
+    id,
+    genres
 }) => {
     const [imageLoaded, setImageLoaded] = useState(false);
     const [imageError, setImageError] = useState(false);
@@ -83,6 +85,7 @@ const GameCard: React.FC<GameCardProps> = ({
             <div className="card-content">
                 <h3 className="card-title">{title}</h3>
                 {subtitle && <h4 className="card-subtitle">{subtitle}</h4>}
+                {genres && <p className="card-genres">{genres}</p>}
                 {releaseInfo && <p className="release-info">{releaseInfo}</p>}
                 {typeof rating === 'number' && (
                     <div className="rating-container">
