@@ -7,7 +7,7 @@
     margin: 15px;
     display: flex;
     flex-direction: column;
-    height: 380px; /* Altura total fixa */
+    height: 410px; /* Altura total fixa */
 }
 
 /* Container da imagem com proporção 16:9 FIXA */
