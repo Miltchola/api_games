@@ -1,3 +1,4 @@
+![DiagramaFullStack](https://github.com/user-attachments/assets/2edc828f-6e60-4dfd-a000-82df9a0749ee)
 # React + TypeScript + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
